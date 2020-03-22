@@ -1,18 +1,33 @@
 ---
 layout: page
-title: About
+title: About me
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](https://jekyllrb.com/)
 
-You can find the source code for Minima at GitHub:
-[jekyll][jekyll-organization] /
-[minima](https://github.com/jekyll/minima)
+![my photo](/assets/about.markdown_img1.jpg)
 
-You can find the source code for Jekyll at GitHub:
-[jekyll][jekyll-organization] /
-[jekyll](https://github.com/jekyll/jekyll)
+My name is Giovanni Sciortino and I’m an system engineer with several year of experience on IT infrastructure.
 
+I have worked in large and medium-sized IT company designing and implementing complex server infrastructures.
 
-[jekyll-organization]: https://github.com/jekyll
+I have professional experience on several technologies:
+
+- System administration and troubleshooting for Linux and Windows servers
+- Software and script development
+- High availability services
+- Opensource software
+- Virtualization
+- Cloud
+- Application migration projects
+
+I like upgrade constantly my skills, learn new technologies and tools useful for my work and share them with other people.
+
+Click on my linkedin profile if you want see my resume.
+
+Giovanni Sciortino
+
+Email: [giovannibattistasciortino@gmail.com](mailto:giovannibattistasciortino@gmail.com)  
+Linkedin profile: [giovannibattistasciortino](https://www.linkedin.com/in/giovannibattistasciortino/)  
+Github profile: [giovannisciortino](https://github.com/giovannisciortino/)  
+
