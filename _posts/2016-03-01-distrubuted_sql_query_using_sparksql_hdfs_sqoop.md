@@ -18,7 +18,7 @@ In this paragraph I show how import a MySQL database in hadoop using [sqoop](htt
 
 I’m using the “world” database that can be downloaded from this [link] (https://dev.mysql.com/doc/index-other.html). It contains data about cities and countries around the world and the languages spoken in each country.
 
-![example entity relationship diagram](2016-03-01-distrubuted_sql_query_using_sparksql_hdfs_sqoop_img1.png){: .center-image }
+![example entity relationship diagram](/assets/2016-03-01-distrubuted_sql_query_using_sparksql_hdfs_sqoop_img1.png){: .center-image }
 
 I import all tables of world database in hdfs using as output format a text file separated by tab character. The following command imports all the table in the hdfs directory /user/cloudera/world
 
@@ -204,8 +204,3 @@ CountryLifeExpectancy = 70.9
 CapitalName = Belmopan
 language = English
 {% endhighlight %}
-
-
-![example entity relationship diagram](2016-03-01-distrubuted_sql_query_using_sparksql_hdfs_sqoop_img1.png){: .center-image }
-
-## 1.

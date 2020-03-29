@@ -13,7 +13,7 @@ I use the mysql example database “World” provided by mysql. It can be downlo
 
 This image show the entity relationship model of this database.
 
-![example entity relationship diagram ](2016-01-06-import_mysql_data_in_elasticsearch_server_img1.png){: .center-image }
+![example entity relationship diagram ](/assets/2016-01-06-import_mysql_data_in_elasticsearch_server_img1.png){: .center-image }
 
 ## Step 1
 The following text box shows the command used to import the example database in mysql

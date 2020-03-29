@@ -14,7 +14,7 @@ Spark applications provides performance up to 100 times faster compared to Hadoo
 
 This formula also called Leibniz series or Gregory–Leibniz was discovered in 16th century by [Gottfried Leibniz](https://en.wikipedia.org/wiki/Gottfried_Wilhelm_Leibniz)) and [James Gregory](https://en.wikipedia.org/wiki/James_Gregory_(mathematician)).
 
-![Gregory-Leibniz-formula](2016-02-16-apache_spark_distributed_computation_of_pi_in_8_lines_of_python_code_img1.png){: .center-image }
+![Gregory-Leibniz-formula](/assets/2016-02-16-apache_spark_distributed_computation_of_pi_in_8_lines_of_python_code_img1.png){: .center-image }
 
 It allows summing an infinite series of numbers of compute the value of pi divided by 4.
 

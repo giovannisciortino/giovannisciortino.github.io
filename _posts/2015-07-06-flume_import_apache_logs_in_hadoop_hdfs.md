@@ -23,7 +23,7 @@ In my example in order to import Apache web server logs I use the following flum
 - **HDFS Sync:** It allows to create text file on HDFS
 The following image shows the architecture of the flume agent used in this example.
 
-![apache flume architecture](2015-07-06-flume_import_apache_logs_in_hadoop_hdfs_img1.jpg){: .center-image }
+![apache flume architecture](/assets/2015-07-06-flume_import_apache_logs_in_hadoop_hdfs_img1.jpg){: .center-image }
 
 The flume agent requires a configuration file defining the sources,channels and sinks used by the agent and their properties. The following text box shows the flume configuration file that I used to import apache web server logs in hadoop:
 

@@ -10,7 +10,7 @@ The physical server architecture, showed in the following figure, remains the sa
 - two Centos server
 - two shared disks between the servers
 
-![gpfs architecture diagram](2015-05-23-ha_two_node_gpfs_cluster_with_tie-breaker_disk_img1.jpg){: .center-image }
+![gpfs architecture diagram](/assets/2015-05-23-ha_two_node_gpfs_cluster_with_tie-breaker_disk_img1.jpg){: .center-image }
 
 The command mmlscluster output shows that only the first gpfs node has assigned the role of manager and quorum node. In order to enable high-availability both the servers must have these two roles.
 
