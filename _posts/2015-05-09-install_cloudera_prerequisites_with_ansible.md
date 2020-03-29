@@ -10,8 +10,8 @@ Ansible is a lightweight alternative to other opensource configuration managemen
 
 In this tutorial two type of ansible configuration files will be used:
 
-- *hosts file:* it allows to define the list of hosts managed by ansible
-- *playbook:* it contains a list of configurations that can be deployed to a server or a group of server
+- **hosts file:** it allows to define the list of hosts managed by ansible
+- **playbook:** it contains a list of configurations that can be deployed to a server or a group of server
 
 
 Cloudera Hadoop requires for each nodes the following prerequisites :
