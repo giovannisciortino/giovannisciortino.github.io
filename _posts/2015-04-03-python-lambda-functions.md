@@ -9,7 +9,7 @@ You can easily identify this functions’ type because are defined using the key
 The following example contains two functions f and g both returning the sum of the two arguments x and y.
 The function f is defined using the lambda operator and the g function is defined in the traditional way.
 
-{% highlight python linenos %}
+{% highlight python %}
 f = lambda x,y: x+y
 def g(x,y):
     return x+y
@@ -24,7 +24,7 @@ The lambda functions could be sometimes difficult to understand and their use co
 They can be useful if used in conjunction with filter,lambda and reduce built-in function, indeed these three functions require as first argument a function.
 You can add a comment before the lambda function in order to increase readability as in the following examples:
 
-{% highlight python linenos %}
+{% highlight python %}
 x = range(1,10)
  
 # filter_x contains only the even numbers of list x
