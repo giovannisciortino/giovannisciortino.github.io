@@ -1,5 +1,5 @@
 ---
-#layout: post
+
 title:  "Python lambda functions"
 tags: [python]
 ---

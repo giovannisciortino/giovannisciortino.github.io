@@ -1,5 +1,5 @@
 ---
-#layout: post
+
 title:  "Python unit testing introduction"
 tags: [python]
 ---

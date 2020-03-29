@@ -1,5 +1,5 @@
 ---
-#layout: post
+
 title:  "Flume: Import apache logs in hadoop hdfs"
 tags: [apache, flume, linux]
 

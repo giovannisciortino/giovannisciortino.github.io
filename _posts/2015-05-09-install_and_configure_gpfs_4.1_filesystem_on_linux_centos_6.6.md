@@ -1,5 +1,5 @@
 ---
-#layout: post
+
 title:  "Install and configure GPFS 4.1 filesystem on Linux Centos 6.6"
 tags: [cluster, linux]
 ---

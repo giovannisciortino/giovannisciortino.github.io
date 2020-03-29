@@ -43,7 +43,7 @@ defaults:
   # _posts
   - scope:
       path: ""
-      type: post
+      type: posts
     values:
       layout: single
 #      author_profile: true
@@ -51,14 +51,6 @@ defaults:
 #      comments: true
 #      share: true
       related: true
-      sidebar:
-        nav: "docs"
-  - scope:
-      path: ""
-      type: post
-    values:
-      sidebar:
-        nav: "docs"
 
 
 
