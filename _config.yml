@@ -38,6 +38,10 @@ plugins:
 # configuration minimal-mistakes
 locale: "en-US"
 subtitle: "Useful tips and tools for system administrators"
+logo: "/assets/logo_sysadminci.png"
+
+
+
 
 # Exclude from processing.
 # The following items will not be processed, by default.
