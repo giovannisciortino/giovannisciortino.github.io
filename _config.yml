@@ -53,7 +53,12 @@ defaults:
       related: true
       sidebar:
         nav: "docs"
-
+  - scope:
+      path: ""
+      type: post
+    values:
+      sidebar:
+        nav: "docs"
 
 
 
