@@ -42,7 +42,7 @@ In order to compute the 10000 values of the series, an sequence of integer betwe
 In order to compute the i-th element of the series I used the following map function “lambda n: (1 if n % 2 == 0 else -1)/float(2*n+1)”.
 The reduce function only sums the elements of the series.
 
-In order to write the map and the reduce functions, I used lambda function python feature, in this blog i wrote a [post]({% post_url 2015-04-03-python-lambda-functions %}) about python lambda function.
+In order to write the map and the reduce functions, I used lambda function python feature, in this blog i wrote a [post](/2015/04/03/python-lambda-functions.html) about python lambda function.
 The result obtained from the reduce function is multiplied by 4 and printed to the standard output.
 
 ## Development and execution environment
