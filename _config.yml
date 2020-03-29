@@ -39,6 +39,18 @@ plugins:
 locale: "en-US"
 subtitle: "Useful tips and tools for system administrators"
 logo: "/assets/logo_sysadminci.png"
+defaults:
+  # _posts
+  - scope:
+      path: ""
+      type: post
+    values:
+      layout: single
+#      author_profile: true
+#      read_time: true
+#      comments: true
+#      share: true
+      related: true
 
 
 

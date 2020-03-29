@@ -1,5 +1,5 @@
 ---
-layout: post
+#layout: post
 title:  "Apache Spark – Distributed computation of π in 8 lines of Python code"
 tags: [hadoop, linux, python, spark]
 ---

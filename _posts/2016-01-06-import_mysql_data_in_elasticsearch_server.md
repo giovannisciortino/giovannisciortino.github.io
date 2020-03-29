@@ -1,5 +1,5 @@
 ---
-layout: post
+#layout: post
 title:  "Import Mysql data in Elasticsearch server"
 tags: [cluster, linux]
 ---

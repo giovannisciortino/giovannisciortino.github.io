@@ -1,5 +1,5 @@
 ---
-layout: post
+#layout: post
 title:  "HA two node GPFS cluster with tie-breaker disk"
 tags: [cluster, linux]
 ---

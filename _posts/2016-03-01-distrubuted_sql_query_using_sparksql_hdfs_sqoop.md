@@ -1,5 +1,5 @@
 ---
-layout: post
+#layout: posts
 title:  "Distributed SQL Query using SparkSQL, HDFS and Sqoop"
 tags: [cluster, hadoop, python, spark]
 ---

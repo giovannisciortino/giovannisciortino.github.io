@@ -1,5 +1,5 @@
 ---
-layout: post
+#layout: post
 title:  "HAProxy basic configuration on Ubuntu 14.04"
 tags: [haproxy, linux]
 ---

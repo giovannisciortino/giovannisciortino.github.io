@@ -1,5 +1,5 @@
 ---
-layout: post
+#layout: post
 title:  "Clone git repo to a non-empty directory"
 tags: [git]
 ---

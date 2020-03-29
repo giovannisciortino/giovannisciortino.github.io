@@ -1,5 +1,5 @@
 ---
-layout: post
+#layout: post
 title:  "Install Cloudera prerequisites with Ansible"
 tags: [automation, cluster, hadoop, linux]
 ---
