@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "Apache Spark – Distributed computation of π in 8 lines of Python code"
+tags: [hadoop, linux, python, spark]
 ---
 
 In this post I show how to write a distributed application computing an approximation of pi number though a Spark application using Python.

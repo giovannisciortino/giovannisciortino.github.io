@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "HAProxy basic configuration on Ubuntu 14.04"
+tags: [haproxy, linux]
 ---
 
 HAProxy is a free, very fast and reliable solution offering high availability, load balancing, and proxying for TCP and HTTP-based applications. It is particularly suited for very high traffic web sites. Over the years it has become the de-facto standard opensource software load balancer, is now shipped with most mainstream Linux distributions, and is often deployed by default in cloud platforms.
@@ -15,9 +16,9 @@ The architecture is composed by three ubuntu virtual machine:
    **Description:** Server running already apache on port 80
 3. **Hostname:** node3    **IP Address:** 172.17.0.103  
    **Description:** Server running already apache on port 80
-  
+
 ![haproxy architecture diagram](/assets/2015-05-09-haproxy_basic_configuration_on_ubuntu_14.04_img1.jpg){: .center-image }
-  
+
 The haproxy software on server node1 will be used to balance the apache service installed on node1 and node2.
 
 1. **Install haproxy software**
@@ -74,7 +75,7 @@ chroot /var/lib/haproxy
 user haproxy
 group haproxy
 daemon
- 
+
 defaults
 log global
 mode http
@@ -90,13 +91,13 @@ errorfile 500 /etc/haproxy/errors/500.http
 errorfile 502 /etc/haproxy/errors/502.http
 errorfile 503 /etc/haproxy/errors/503.http
 errorfile 504 /etc/haproxy/errors/504.http
- 
+
 frontend http-frontend
 bind 172.17.0.101:80
 # Add "X-Forwarded-For" header with the original client's IP address
 reqadd X-Forwarded-Proto:\ http
 default_backend http-backend
- 
+
 backend http-backend
 server node2 172.17.0.102:80 check
 server node3 172.17.0.103:80 check
@@ -151,17 +152,17 @@ To enable it add the following content in /etc/haproxy/haproxy.cfg and reload th
 
 {% highlight bash %}
 listen stats 172.17.0.101:1936
- 
+
 mode http
 log global
- 
+
 maxconn 10
- 
+
 clitimeout 100s
 srvtimeout 100s
 contimeout 100s
 timeout queue 100s
- 
+
 stats enable
 stats hide-version
 stats refresh 30s
@@ -169,7 +170,7 @@ stats show-node
 stats auth admin:password # Change username and password for statistics webpage authentication
 stats uri /haproxy?stats
 Reload haproxy configuration
- 
+
 root@node1:~# /etc/init.d/haproxy reload
 {% endhighlight %}
 
@@ -188,21 +189,21 @@ The following configuration can be added to haproxy configuration file in order 
 
 {% highlight bash %}
 frontend http-frontend1
- 
+
 bind 172.17.0.101:81
 reqadd X-Forwarded-Proto:\ http
 default_backend http-backend1
- 
+
 backend http-backend1
 balance leastconn
 server node2 172.17.0.102:80 check
 server node3 172.17.0.103:80 check
- 
+
 frontend http-frontend2
 bind 172.17.0.101:82
 reqadd X-Forwarded-Proto:\ http
 default_backend http-backend2
- 
+
 backend http-backend2
 balance source
 server node2 172.17.0.102:80 check

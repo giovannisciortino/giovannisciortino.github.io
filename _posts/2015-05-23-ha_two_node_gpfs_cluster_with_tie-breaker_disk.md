@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "HA two node GPFS cluster with tie-breaker disk"
+tags: [cluster, linux]
 ---
 
 In a previous post I described how configure a GPFS cluster filesystem ( a filesystem that can be mounted by two or more servers simultaneously ).

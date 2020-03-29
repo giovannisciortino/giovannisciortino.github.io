@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "Import Mysql data in Elasticsearch server"
+tags: [cluster, linux]
 ---
 
 Elasticsearch is a near real-time search server based on Lucene. It allows to create a distributed full-text search engine. It’s an opensource software developed in Java. It offers REST api in order to insert, retrieve and search data.

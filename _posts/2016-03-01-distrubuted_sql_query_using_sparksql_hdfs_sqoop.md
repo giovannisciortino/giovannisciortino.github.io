@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "Distributed SQL Query using SparkSQL, HDFS and Sqoop
-"
+title:  "Distributed SQL Query using SparkSQL, HDFS and Sqoop"
+tags: [cluster, hadoop, python, spark]
 ---
 
 ## Spark SQL: A brief introduction

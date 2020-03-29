@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "Install and configure GPFS 4.1 filesystem on Linux Centos 6.6"
+tags: [cluster, linux]
 ---
 
 The General Parallel File System (GPFS) is a high-performance clustered file system developed by IBM. It can be deployed in shared-disk infrastructure or in shared-nothing architecture. It’s used by many large company and in serveral supercomputers on the Top 500 List.
@@ -41,9 +42,9 @@ Install gpfs rpm on both nodes
 /root/gpfs_repo/gpfs.gskit-8.0.50-32.x86_64.rpm
 /root/gpfs_repo/gpfs.msg.en_US-4.1.0-5.noarch.rpm
 /root/gpfs_repo/gpfs.gpl-4.1.0-5.noarch.rpm
- 
+
 [root@gpfs02 gpfs_repo]# yum localinstall *.rpm
- 
+
 [root@gpfs02 gpfs_repo]# find $PWD
 /root/gpfs_repo
 /root/gpfs_repo/gpfs.ext-4.1.0-5.x86_64.rpm
@@ -53,7 +54,7 @@ Install gpfs rpm on both nodes
 /root/gpfs_repo/gpfs.gskit-8.0.50-32.x86_64.rpm
 /root/gpfs_repo/gpfs.msg.en_US-4.1.0-5.noarch.rpm
 /root/gpfs_repo/gpfs.gpl-4.1.0-5.noarch.rpm
- 
+
 [root@gpfs01 gpfs_repo]# yum localinstall *.rpm
 {% endhighlight %}
 
@@ -67,7 +68,7 @@ Configure hosts file on both nodes in order to allow name resolution.
 ::1 localhost localhost.localdomain localhost6 localhost6.localdomain6
 172.17.0.101 gpfs01 gpfs01.example.com
 172.17.0.102 gpfs02 gpfs02.example.com
- 
+
 [root@gpfs02 gpfs_repo]# cat /etc/hosts
 127.0.0.1 localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1 localhost localhost.localdomain localhost6 localhost6.localdomain6
@@ -93,13 +94,13 @@ Verify the previous step executing a ssh connection between each couple of nodes
 {% highlight bash %}
 [root@gpfs01 ~]# ssh gpfs01 date
 Sat Apr 18 10:52:08 CEST 2015
- 
+
 [root@gpfs01 ~]# ssh gpfs02 date
 Sat Apr 18 10:52:09 CEST 2015
- 
+
 [root@gpfs02 ~]# ssh gpfs01 date
 Mon Apr 13 21:44:52 CEST 2015
- 
+
 [root@gpfs02 ~]# ssh gpfs02 date
 Mon Apr 13 21:44:53 CEST 2015
 {% endhighlight %}
@@ -121,7 +122,7 @@ In order to avoid the error “Cannot find a valid kernel include directory” d
 
 {% highlight bash %}
 [root@gpfs01 src]# yum install kernel-headers-2.6.32-504.12.2.el6
- 
+
 [root@gpfs01 src]# yum install kernel-devel-2.6.32-504.12.2.el6
 [root@gpfs01 src]# yum install imake gcc-c++ rpmbuild
 {% endhighlight %}
@@ -132,9 +133,9 @@ Distribute GPFS portability layer rpm on each node and install it.
 
 {% highlight bash %}
 [root@gpfs01 src]# scp /root/rpmbuild/RPMS/x86_64/gpfs.gplbin-2.6.32-504.12.2.el6.x86_64-4.1.0-5.x86_64.rpm gpfs02:/tmp/gpfs.gplbin-2.6.32-504.12.2.el6.x86_64-4.1.0-5.x86_64.rpm
- 
+
 [root@gpfs01 src]# yum localinstall /root/rpmbuild/RPMS/x86_64/gpfs.gplbin-2.6.32-504.12.2.el6.x86_64-4.1.0-5.x86_64.rpm
- 
+
 [root@gpfs02 ~]# yum localinstall /tmp/gpfs.gplbin-2.6.32-504.12.2.el6.x86_64-4.1.0-5.x86_64.rpm
 {% endhighlight %}
 
@@ -144,7 +145,7 @@ In this step the cluster is created adding the node gpfs01 with the role of clus
 
 {% highlight bash %}
 [root@gpfs01 ~]# /usr/lpp/mmfs/bin/mmcrcluster -N gpfs01:manager-quorum -p gpfs01 -r /usr/bin/ssh -R /usr/bin/scp
- 
+
 mmcrcluster: Performing preliminary node verification ...
 mmcrcluster: Processing quorum and other critical nodes ...
 mmcrcluster: Finalizing the cluster data structures ...
@@ -155,7 +156,7 @@ Use the mmchlicense command to designate licenses as needed
 
 {% highlight bash %}
 [root@gpfs01 ~]# /usr/lpp/mmfs/bin/mmlscluster
- 
+
 ===============================================================================
 | Warning: |
 | This cluster contains nodes that do not have a proper GPFS license |
@@ -172,7 +173,7 @@ GPFS UID domain: gpfs01
 Remote shell command: /usr/bin/ssh
 Remote file copy command: /usr/bin/scp
 Repository type: CCR
- 
+
 Node Daemon node name IP address Admin node name Designation
 --------------------------------------------------------------------
 1 gpfs01 172.17.0.101 gpfs01 quorum-manager
@@ -182,7 +183,7 @@ You need to accept the GPFS server license for node gpfs01.
 
 {% highlight bash %}
 [root@gpfs01 ~]# /usr/lpp/mmfs/bin/mmchlicense server --accept -N gpfs01
- 
+
 The following nodes will be designated as possessing GPFS server licenses:
 gpfs01
 mmchlicense: Command successfully completed
@@ -201,7 +202,7 @@ Verify the node status
 
 {% highlight bash %}
 [root@gpfs01 ~]# /usr/lpp/mmfs/bin/mmgetstate -a
- 
+
 Node number Node name GPFS state
 ------------------------------------------
 1 gpfs01 active
@@ -219,13 +220,13 @@ mmaddnode: Warning: Not all nodes have proper GPFS license designations.
 Use the mmchlicense command to designate licenses as needed.
 mmaddnode: Propagating the cluster configuration data to all
 affected nodes. This is an asynchronous process.
- 
+
 Now the command mmlscluster shows that the cluster is composed by two servers.
- 
+
 [root@gpfs01 ~]# /usr/lpp/mmfs/bin/mmlscluster
- 
+
 GPFS cluster information
- 
+
 ========================
 GPFS cluster name: gpfs01
 GPFS cluster id: 14526312809412325839
@@ -233,7 +234,7 @@ GPFS UID domain: gpfs01
 Remote shell command: /usr/bin/ssh
 Remote file copy command: /usr/bin/scp
 Repository type: CCR
- 
+
 Node Daemon node name IP address Admin node name Designation
 --------------------------------------------------------------------
 1 gpfs01 172.17.0.101 gpfs01 quorum-manager
@@ -245,9 +246,9 @@ Node Daemon node name IP address Admin node name Designation
 {% highlight bash %}
 [root@gpfs01 ~]# /usr/lpp/mmfs/bin/mmstartup -N gpfs02
 Fri Apr 24 18:47:32 CEST 2015: mmstartup: Starting GPFS ...
- 
+
 [root@gpfs01 ~]# /usr/lpp/mmfs/bin/mmgetstate -a
- 
+
 Node number Node name GPFS state
 ------------------------------------------
 1 gpfs01 active
@@ -264,12 +265,12 @@ Two NSD disk has been defined, their name are mynsd1 and mynsd2 and the device f
 
 {% highlight bash %}
 [root@gpfs01 ~]# cat diskdef.txt
- 
+
 %nsd:
 device=/dev/sdb
 nsd=mynsd1
 usage=dataAndMetadata
- 
+
 %nsd:
 device=/dev/sdc
 nsd=mynsd2
@@ -288,7 +289,7 @@ affected nodes. This is an asynchronous process.
 Show the NSD configuration
 {% highlight bash %}
 [root@gpfs01 ~]# /usr/lpp/mmfs/bin/mmlsnsd
- 
+
 File system Disk name NSD servers
 ---------------------------------------------------------------------------
 (free disk) mynsd1 (directly attached)
@@ -301,7 +302,7 @@ The following command create a gpfs filesystem called fs_gpfs01 using the NSD de
 
 {% highlight bash %}
 [root@gpfs01 ~]# /usr/lpp/mmfs/bin/mmcrfs fs_gpfs01 -F diskdef.txt -A yes -T /fs_gpfs01
- 
+
 The following disks of fs_gpfs01 will be formatted on node gpfs01.example.com:
 mynsd1: size 10240 MB
 mynsd2: size 10240 MB
@@ -356,7 +357,7 @@ You can verify that gpfs filesystem is mounted using the command mmlsmount or us
 {% highlight bash %}
 [root@gpfs01 ~]# /usr/lpp/mmfs/bin/mmlsmount all
 File system fs_gpfs01 is mounted on 2 nodes.
- 
+
 [root@gpfs01 ~]# df
 Filesystem 1K-blocks Used Available Use% Mounted on
 /dev/mapper/vg_gpfs01-lv_root 17938864 1278848 15742104 8% /
@@ -392,4 +393,3 @@ grep "mmfs:" /var/log/messages
 In order to avoid to use the full path for gpfs command the directory /usr/lpp/mmfs/bin/ can be added to the environment PATH variable of root
 
 Add the line “PATH=$PATH:/usr/lpp/mmfs/bin/” in /root/.bash_profile before the line “export PATH”
-

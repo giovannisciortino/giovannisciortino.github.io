@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "Install Cloudera prerequisites with Ansible"
+tags: [automation, cluster, hadoop, linux]
 ---
 
 Ansible is an opensource software for configuring and managing a server infrastructures. It allows multi-node software deployment, ad hoc task execution and configuration management.

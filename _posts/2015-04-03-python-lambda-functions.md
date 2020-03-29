@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "Python lambda functions"
+tags: [python]
 ---
 
 Python allows to define anonymous functions (i.e. function not bounded to a name).
@@ -13,7 +14,7 @@ The function f is defined using the lambda operator and the g function is define
 f = lambda x,y: x+y
 def g(x,y):
     return x+y
- 
+
 print f(1,2)
 3
 print g(1,2)
@@ -26,17 +27,16 @@ You can add a comment before the lambda function in order to increase readabilit
 
 {% highlight python %}
 x = range(1,10)
- 
+
 # filter_x contains only the even numbers of list x
 filter_x = filter( lambda i: i % 2 == 0, x)
 print filter_x
- 
+
 # map_x contains each element of list x multiplied by 2
 map_x = map( lambda i: i * 2, x)
 print map_x
- 
+
 # reduce_r contains the product of each element of list x
 reduce_x = reduce(lambda a,b: a*b, x)
 print reduce_x
 {% endhighlight %}
-

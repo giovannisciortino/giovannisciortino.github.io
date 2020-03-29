@@ -1,7 +1,8 @@
 ---
 layout: post
-title:  "Flume: Import apache logs in hadoop hdfs
-"
+title:  "Flume: Import apache logs in hadoop hdfs"
+tags: [apache, flume, linux]
+
 ---
 
 Flume is a project of the Apache Software Foundation used to import stream of data to a centralized data store. In hadoop environments Flume is used to import data into hadoop clusters from different data sources.
