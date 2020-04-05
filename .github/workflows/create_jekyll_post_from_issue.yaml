@@ -33,7 +33,7 @@ jobs:
           fi
         env:
           GIT_USER_NAME: 'Giovanni Sciortino'
-          GIT_USER_EMAIL: 'giovannisciortino@gmail.com'
+          GIT_USER_EMAIL: 'giovannibattistasciortino@gmail.com'
           DEFAULT_COMMIT_MESSAGE: 'New jekyll post create from github issue'
 
       - name: Push changes
