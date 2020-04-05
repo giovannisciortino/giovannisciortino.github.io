@@ -4,3 +4,5 @@
 
 layout: home
 ---
+{% include nav_list nav="foo" %}
+
