@@ -1,7 +1,7 @@
 #!/bin/bash
 EXTRACT_TAGS_FROM_POSTS=$(grep --no-filename tags _posts/*|cut -d"[" -f2|cut -d"]" -f1| tr ',' '\n'|sed 's/^ *//g'|sort|uniq)
 for TAG in $EXTRACT_TAGS_FROM_POSTS ; do
-cat << 'EOF' > tag/${TAG}.md
+cat > tag/${TAG}.md << EOL
 ---
 title:  ""
 tag: ${TAG}
@@ -18,5 +18,5 @@ tag: ${TAG}
 </ul>
 </div>
 <hr>
-EOF
+EOL
 done
