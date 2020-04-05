@@ -3,13 +3,20 @@ main:
     url: /about/
 
 sidebar:
-  - title: "Parent Link 1"
-    url: /parent-1-page-url/
+  - title: "ARCHIVES"
     children:
-      - title: "Child Link 1"
+      - title: March 2016
         url: /child-1-page-url/
-      - title: "Child Link 2"
-        url: /child-2-page-url/
+      - title: February 2016
+        url: /child-1-page-url/
+      - title: January 2016
+        url: /child-1-page-url/
+      - title: July 2015
+        url: /child-1-page-url/
+      - title: May 2015
+        url: /child-1-page-url/
+      - title: April 2015
+        url: /child-1-page-url/
 
   - title: "Parent Link 2"
     url: /parent-2-page-url/
@@ -20,5 +27,3 @@ sidebar:
         url: /child-2-page-url/
       - title: "Child Link 3"
         url: /child-3-page-url/
-
-
