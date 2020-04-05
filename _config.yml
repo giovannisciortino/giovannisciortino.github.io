@@ -40,10 +40,10 @@ locale: "en-US"
 subtitle: "Useful tips and tools for system administrators"
 logo: "/assets/logo_sysadminci.png"
 defaults:
-  # _posts
+  # _posts and all md files
   - scope:
       path: ""
-      type: posts
+#      type: posts
     values:
       layout: single
 #      author_profile: true
