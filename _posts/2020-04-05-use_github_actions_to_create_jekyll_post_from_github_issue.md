@@ -1,6 +1,7 @@
 ---
-title:  "Use GitHub Actions to create jekyll post from github issue"
+title:  "Use GitHub Actions to create Jekyll post from github issue"
 tags: [github,jekyll]
+published: false
 ---
 
 ## Example syntax highlight
