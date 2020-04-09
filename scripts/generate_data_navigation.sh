@@ -4,7 +4,7 @@ TAGS_CHILDREN=""
 
 for TAG in $EXTRACT_TAGS_FROM_POSTS ; do
   TAGS_CHILDREN="${TAGS_CHILDREN}      - title: $TAG\n"
-  TAGS_CHILDREN="${TAGS_CHILDREN}        url: /tag/$TAG/\n"
+  TAGS_CHILDREN="${TAGS_CHILDREN}        url: /tag/$TAG\n"
 done
 
 cat > _data/navigation.yml << EOF
