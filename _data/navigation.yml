@@ -3,27 +3,35 @@ main:
     url: /about/
 
 sidebar:
-  - title: "ARCHIVES"
+#  - title: "ARCHIVES"
+#    children:
+#      - title: March 2016
+#        url: /child-1-page-url/
+#      - title: February 2016
+#        url: /child-1-page-url/
+  - title: "TAGS"
     children:
-      - title: March 2016
-        url: /child-1-page-url/
-      - title: February 2016
-        url: /child-1-page-url/
-      - title: January 2016
-        url: /child-1-page-url/
-      - title: July 2015
-        url: /child-1-page-url/
-      - title: May 2015
-        url: /child-1-page-url/
-      - title: April 2015
-        url: /child-1-page-url/
-
-  - title: "Parent Link 2"
-    url: /parent-2-page-url/
-    children:
-      - title: "Child Link 1"
-        url: /child-1-page-url/
-      - title: "Child Link 2"
-        url: /child-2-page-url/
-      - title: "Child Link 3"
-        url: /child-3-page-url/
+      - title: apache
+        url: /tag/apache/
+      - title: automation
+        url: /tag/automation/
+      - title: cluster
+        url: /tag/cluster/
+      - title: flume
+        url: /tag/flume/
+      - title: git
+        url: /tag/git/
+      - title: github
+        url: /tag/github/
+      - title: hadoop
+        url: /tag/hadoop/
+      - title: haproxy
+        url: /tag/haproxy/
+      - title: jekyll
+        url: /tag/jekyll/
+      - title: linux
+        url: /tag/linux/
+      - title: python
+        url: /tag/python/
+      - title: spark
+        url: /tag/spark/
