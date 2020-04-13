@@ -13,7 +13,7 @@ jobs:
         with:
           path: master
 
-      - name: Make build destination directory
+      - name: Create jekyll build destination directory
         run: mkdir -vp www 
 
       - name: Jekyll Build
@@ -51,4 +51,5 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           directory: jekyll_built
+          branch: 'master'
           github_token: ${{ secrets.GITHUB_TOKEN }}
