@@ -28,13 +28,9 @@ jobs:
         with:
           ref: jekyll_built
           path: jekyll_built
-        
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v2
-      
-      
-      - name: Make build destination directory
-        run: cp -r /github/workspace/master/www/* /github/workspace/master/jekyll_built
+              
+      - name: Copy built site to destination directory
+        run: cp -ar master/www jekyll_built
 
       - name: Commit files
         working-directory: jekyll_built
@@ -50,7 +46,6 @@ jobs:
           GIT_USER_NAME: 'Giovanni Sciortino'
           GIT_USER_EMAIL: 'giovannibattistasciortino@gmail.com'
           DEFAULT_COMMIT_MESSAGE: 'New jekyll built'
-
 
       - name: Push changes
         uses: ad-m/github-push-action@master
