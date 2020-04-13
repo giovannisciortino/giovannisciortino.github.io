@@ -33,7 +33,7 @@ jobs:
         run: pwd
 
       - name: Make build destination directory
-        run: find ./www
+        run: cp -r /github/workspace/master/www/* /github/workspace/master/jekyll_built
 
       - name: Commit files
         working-directory: jekyll_built
