@@ -30,7 +30,7 @@ jobs:
           path: jekyll_built
 
       - name: Make build destination directory
-        run: cp -r www/_site/* jekyll_built
+        run: find www
 
       - name: Commit files
         working-directory: jekyll_built
