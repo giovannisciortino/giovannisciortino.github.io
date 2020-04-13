@@ -30,7 +30,7 @@ jobs:
           path: jekyll_built
 
       - name: Make build destination directory
-        run: find www
+        run: find /github/workspace/master/www
 
       - name: Commit files
         working-directory: jekyll_built
