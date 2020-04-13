@@ -30,7 +30,7 @@ jobs:
           path: jekyll_built
               
       - name: Copy built site to destination directory
-        run: cp -ar master/www jekyll_built
+        run: cp -ar master/www/* jekyll_built
 
       - name: Commit files
         working-directory: jekyll_built
