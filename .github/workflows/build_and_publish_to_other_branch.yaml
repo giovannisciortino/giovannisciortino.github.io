@@ -2,7 +2,8 @@ name: A workflow to create a build jekyll site and push it to other branch of sa
 on:
   push:
     branches:
-      - master:
+    - master        
+jobs:       
   build:
     name: A job to create a build jekyll site and push it to other branch of same repository
     runs-on: ubuntu-latest
