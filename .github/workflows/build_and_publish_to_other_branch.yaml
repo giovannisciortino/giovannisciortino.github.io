@@ -51,5 +51,5 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           directory: jekyll_built
-          branch: 'master'
+          branch: 'jekyll_built'
           github_token: ${{ secrets.GITHUB_TOKEN }}
