@@ -28,10 +28,11 @@ jobs:
         with:
           ref: jekyll_built
           path: jekyll_built
-
-      - name: Current directory
-        run: pwd
-
+        
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v2
+      
+      
       - name: Make build destination directory
         run: cp -r /github/workspace/master/www/* /github/workspace/master/jekyll_built
 
