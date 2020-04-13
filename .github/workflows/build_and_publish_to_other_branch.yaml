@@ -14,14 +14,14 @@ jobs:
           path: master
 
       - name: Make build destination directory
-        run: mkdir -vp /tmp/www 
+        run: mkdir -vp www 
 
       - name: Jekyll Build
         uses: gha-utilities/jekyll-build@v0.0.3
         with:
           jekyll_github_token: ${{ secrets.GITHUB_TOKEN }}
-          source: /tmp/master
-          destination: /tmp/www
+          source: master
+          destination: www
 
       - name: Checkout jekyll_built branch
         uses: actions/checkout@master
@@ -30,7 +30,7 @@ jobs:
           path: jekyll_built
 
       - name: Make build destination directory
-        run: cp -r /tmp/jekyll_built/_site jekyll_built
+        run: cp -r www/_site/* jekyll_built
 
       - name: Commit files
         working-directory: jekyll_built
@@ -51,5 +51,5 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          directory: /tmp/jekyll_built
+          directory: jekyll_built
           github_token: ${{ secrets.GITHUB_TOKEN }}
