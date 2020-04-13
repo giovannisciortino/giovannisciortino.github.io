@@ -11,7 +11,7 @@ jobs:
       - name: Checkout master branch
         uses: actions/checkout@master
         with:
-          path: /tmp/master
+          path: master
 
       - name: Make build destination directory
         run: mkdir -vp /tmp/www 
@@ -27,13 +27,13 @@ jobs:
         uses: actions/checkout@master
         with:
           ref: jekyll_built
-          path: /tmp/jekyll_built
+          path: jekyll_built
 
       - name: Make build destination directory
-        run: cp -r /tmp/jekyll_built/_site /tmp/jekyll_built
+        run: cp -r /tmp/jekyll_built/_site jekyll_built
 
       - name: Commit files
-        working-directory: /tmp/jekyll_built
+        working-directory: jekyll_built
         run: |
           git config --local user.name "$GIT_USER_NAME"
           git config --local user.email "$GIT_USER_EMAIL"
