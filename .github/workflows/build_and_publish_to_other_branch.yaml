@@ -10,10 +10,13 @@ jobs:
     steps:
       - name: Checkout master branch
         uses: actions/checkout@master
-      - uses: meitar/jekyll-builder-for-github-pages-action@master
+
+      - name: Make build destination directory
+        run: mkdir -vp ~/www
+
+      - name: Jekyll Build
+        uses: gha-utilities/jekyll-build@v0.0.3
         with:
-          # Provide this action with your repository's `GH_PAGES_TOKEN`
-          # "Secret" variable. This should be the value of a personal
-          # access token granted, at a minimum, the `public_repo` and
-          # the `repo_deployment` scopes needed to deploy to GH Pages.
-          secret_gh_pages_api_token: ${{ secrets.GITHUB_TOKEN }}
+          jekyll_github_token: ${{ secrets.GITHUB_TOKEN }}
+          source: ./
+          destination: ~/www
