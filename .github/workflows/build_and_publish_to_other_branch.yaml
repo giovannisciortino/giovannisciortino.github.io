@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: Checkout master branch
         uses: actions/checkout@master
+        with:
+          path: /tmp/master
 
       - name: Make build destination directory
         run: mkdir -vp /tmp/www 
@@ -18,17 +20,20 @@ jobs:
         uses: gha-utilities/jekyll-build@v0.0.3
         with:
           jekyll_github_token: ${{ secrets.GITHUB_TOKEN }}
-          source: ./
+          source: /tmp/master
           destination: /tmp/www
-
-      - uses: AutoModality/action-clean@v1
 
       - name: Checkout jekyll_built branch
         uses: actions/checkout@master
         with:
           ref: jekyll_built
+          path: /tmp/jekyll_built
+
+      - name: Make build destination directory
+        run: cp -r /tmp/jekyll_built/_site /tmp/jekyll_built
 
       - name: Commit files
+        working-directory: /tmp/jekyll_built
         run: |
           git config --local user.name "$GIT_USER_NAME"
           git config --local user.email "$GIT_USER_EMAIL"
@@ -42,7 +47,9 @@ jobs:
           GIT_USER_EMAIL: 'giovannibattistasciortino@gmail.com'
           DEFAULT_COMMIT_MESSAGE: 'New jekyll built'
 
+
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
+          directory: /tmp/jekyll_built
           github_token: ${{ secrets.GITHUB_TOKEN }}
