@@ -9,9 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout test branch
-        uses: actions/checkout@test
+        uses: actions/checkout@master
         with:
           path: test
+          ref: test
 
       - name: Create jekyll build destination directory
         run: mkdir -vp www 
