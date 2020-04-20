@@ -65,7 +65,7 @@ var store = [{
         "url": "/2016/03/01/distrubuted_sql_query_using_sparksql_hdfs_sqoop.html",
         "teaser": null
       },{
-        "title": "Use GitHub Actions to create Jekyll post from GitHub issue",
+        "title": "MODIFICA EFFETTUATA NEL BRANCH TEST",
         "excerpt":"This post describe a GitHub Actions workflow that allow to create new post on a Jekyll web site contained in a GitHub repository using the issue editor of GitHub website. GitHub Actions [1] makes it easy to automate all your software workflows, it build, test, and deploy your code right...","categories": [],
         "tags": ["github actions","jekyll"],
         "url": "/2020/04/05/use_github_actions_to_create_jekyll_post_from_github_issue.html",
