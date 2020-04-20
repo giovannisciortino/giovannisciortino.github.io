@@ -37,7 +37,7 @@ jobs:
         run: cp -ar test/www/* master/test
 
       - name: Commit files
-        working-directory: jekyll_built
+        working-directory: master
         run: |
           git config --local user.name "$GIT_USER_NAME"
           git config --local user.email "$GIT_USER_EMAIL"
@@ -49,7 +49,7 @@ jobs:
         env:
           GIT_USER_NAME: 'Giovanni Sciortino'
           GIT_USER_EMAIL: 'giovannibattistasciortino@gmail.com'
-          DEFAULT_COMMIT_MESSAGE: 'New jekyll built'
+          DEFAULT_COMMIT_MESSAGE: 'New jekyll build from test branch to /test'
 
       - name: Push changes
         uses: ad-m/github-push-action@master
