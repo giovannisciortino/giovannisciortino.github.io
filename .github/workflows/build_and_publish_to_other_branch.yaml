@@ -1,17 +1,17 @@
-name: A workflow to create a build jekyll site and push it to other branch of same repository
+name: A workflow to create a build jekyll site from branch test and push it to /test path of master branch
 on:
   push:
     branches:
-    - master        
+    - test        
 jobs:       
   build:
     name: A job to create a build jekyll site and push it to other branch of same repository
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout master branch
-        uses: actions/checkout@master
+      - name: Checkout test branch
+        uses: actions/checkout@test
         with:
-          path: master
+          path: test
 
       - name: Create jekyll build destination directory
         run: mkdir -vp www 
@@ -20,17 +20,20 @@ jobs:
         uses: gha-utilities/jekyll-build@v0.0.3
         with:
           jekyll_github_token: ${{ secrets.GITHUB_TOKEN }}
-          source: master
+          source: test
           destination: www
 
-      - name: Checkout jekyll_built branch
+      - name: Checkout master branch
         uses: actions/checkout@master
         with:
-          ref: jekyll_built
-          path: jekyll_built
-              
+          ref: master
+          path: master
+
+      - name: Create destination directory if not exist
+        run: mkdir -p master/test
+
       - name: Copy built site to destination directory
-        run: cp -ar master/www/* jekyll_built
+        run: cp -ar test/www/* master/test
 
       - name: Commit files
         working-directory: jekyll_built
@@ -50,6 +53,6 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          directory: jekyll_built
-          branch: 'jekyll_built'
+          directory: master
+          branch: 'master'
           github_token: ${{ secrets.GITHUB_TOKEN }}
