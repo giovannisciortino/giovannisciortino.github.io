@@ -1,0 +1,514 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.19.1 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Install Cloudera prerequisites with Ansible - SYSADMIN CONTINUOUS IMPROVEMENT</title>
+<meta name="description" content="Ansible is an opensource software for configuring and managing a server infrastructures. It allows multi-node software deployment, ad hoc task execution and configuration management. In this post I show how use ansible to deploy some Cloudera Hadoop 5 prerequisites to a large set of server. ">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="SYSADMIN CONTINUOUS IMPROVEMENT">
+<meta property="og:title" content="Install Cloudera prerequisites with Ansible">
+<meta property="og:url" content="/2015/05/09/install_cloudera_prerequisites_with_ansible.html">
+
+
+  <meta property="og:description" content="Ansible is an opensource software for configuring and managing a server infrastructures. It allows multi-node software deployment, ad hoc task execution and configuration management. In this post I show how use ansible to deploy some Cloudera Hadoop 5 prerequisites to a large set of server. ">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2015-05-09T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="/2015/05/09/install_cloudera_prerequisites_with_ansible.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="SYSADMIN CONTINUOUS IMPROVEMENT Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/logo_sysadminci.png" alt=""></a>
+        
+        <a class="site-title" href="/">
+          SYSADMIN CONTINUOUS IMPROVEMENT
+          <span class="site-subtitle">Useful tips and tools for system administrators</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about/">About me</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle Menu</label>
+  <ul class="nav__items">
+    
+      <li>
+        
+          <span class="nav__sub-title">TAGS</span>
+        
+
+        
+        <ul>
+          
+            <li><a href="/tag/apache">apache</a></li>
+          
+            <li><a href="/tag/automation">automation</a></li>
+          
+            <li><a href="/tag/cluster">cluster</a></li>
+          
+            <li><a href="/tag/flume">flume</a></li>
+          
+            <li><a href="/tag/git">git</a></li>
+          
+            <li><a href="/tag/github">github</a></li>
+          
+            <li><a href="/tag/hadoop">hadoop</a></li>
+          
+            <li><a href="/tag/haproxy">haproxy</a></li>
+          
+            <li><a href="/tag/jekyll">jekyll</a></li>
+          
+            <li><a href="/tag/linux">linux</a></li>
+          
+            <li><a href="/tag/python">python</a></li>
+          
+            <li><a href="/tag/spark">spark</a></li>
+          
+        </ul>
+        
+      </li>
+    
+  </ul>
+</nav>
+
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Install Cloudera prerequisites with Ansible">
+    <meta itemprop="description" content="Ansible is an opensource software for configuring and managing a server infrastructures. It allows multi-node software deployment, ad hoc task execution and configuration management.In this post I show how use ansible to deploy some Cloudera Hadoop 5 prerequisites to a large set of server.">
+    <meta itemprop="datePublished" content="2015-05-09T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Install Cloudera prerequisites with Ansible
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Ansible is an opensource software for configuring and managing a server infrastructures. It allows multi-node software deployment, ad hoc task execution and configuration management.
+In this post I show how use ansible to deploy some Cloudera Hadoop 5 prerequisites to a large set of server.</p>
+
+<p>Ansible is a lightweight alternative to other opensource configuration management tools like puppet. It doesn’t need any agent installed on each managed node like puppet. It require only a ssh connection from ansible server to managed servers and the python package installed on them.</p>
+
+<p>In this tutorial two type of ansible configuration files will be used:</p>
+
+<ul>
+  <li><strong>hosts file:</strong> it allows to define the list of hosts managed by ansible</li>
+  <li><strong>playbook:</strong> it contains a list of configurations that can be deployed to a server or a group of server</li>
+</ul>
+
+<p>Cloudera Hadoop requires for each nodes the following prerequisites :</p>
+<ul>
+  <li>The file /etc/hosts of each nodes containing consistent information about hostnames and IP addresses across all hosts</li>
+  <li>SELinux disabled</li>
+  <li>IPv6 disabled</li>
+  <li>vm.swappiness kernel option must be set to a value less or equal to 10</li>
+  <li>A password-less ssh connection to root user with a unique private keys must be configured</li>
+</ul>
+
+<p>This configuration must be deployed to each cloudera server. The manual execution of these tasks over a large hadoop infrastructure could be a time-consuming activity.
+Ansible can automatize all this operation.</p>
+
+<p>The example showed in this post uses an hostgroup of 4 cloudera server but it can be easily scaled to hundreds of servers.</p>
+
+<p>Each node in my configuration uses Centos 6.5 operating system and python and libselinux-python rpm has been installed.
+The libselinux-python rpm package is required also to disable selinux configuration and it could be also installed by ansible.</p>
+
+<p>I install ansible on the first host of my hostgroup.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@cloudera01 ~]# yum <span class="nb">install </span>epel-release
+<span class="o">[</span>root@cloudera01 ~]# yum <span class="nb">install </span>ansible</code></pre></figure>
+
+<p>I modify the ansible hosts file /etc/ansible/hosts as showed below. This file defines an hostgroup named “cloudera” and its hostnames list (these hostnames should be defined on /etc/hosts or in a DNS server )</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@cloudera01 ~]# <span class="nb">cat</span> /etc/ansible/hosts
+<span class="o">[</span>cloudera]
+cloudera01
+cloudera02
+cloudera03
+cloudera04</code></pre></figure>
+
+<p>I create a playbook in /root/cloudera-prerequisites.yml as showed in the following text box.</p>
+
+<p>Playbooks are text file in YAML format containing a set of orchestration steps.</p>
+
+<p>This playbook defines:</p>
+<ul>
+  <li>The group of servers involved in the orchestration</li>
+  <li>The remote username used for the ssh connection
+-A list of orchestration step(task) that must be executed on each server of cloudera group. Each task define an ansible module and their parameter. You can found more detail about ansible modules on Ansible documentation <a href="http://docs.ansible.com/modules.html">http://docs.ansible.com/modules.html</a> .</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@cloudera01 ~]# <span class="nb">cat </span>cloudera-prerequisites.yml
+- hosts: cloudera
+remote_user: root
+tasks:
+- selinux: <span class="nv">state</span><span class="o">=</span>disabled
+- sysctl: <span class="nv">name</span><span class="o">=</span>net.ipv6.conf.all.disable_ipv6 <span class="nv">value</span><span class="o">=</span>1 <span class="nv">state</span><span class="o">=</span>present
+- sysctl: <span class="nv">name</span><span class="o">=</span>net.ipv6.conf.default.disable_ipv6 <span class="nv">value</span><span class="o">=</span>1 <span class="nv">state</span><span class="o">=</span>present
+- sysctl: <span class="nv">name</span><span class="o">=</span>vm.swappiness <span class="nv">value</span><span class="o">=</span>10 <span class="nv">state</span><span class="o">=</span>present
+- authorized_key: <span class="nv">user</span><span class="o">=</span>root <span class="nv">key</span><span class="o">=</span><span class="s2">"{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"</span>
+- copy: <span class="nv">src</span><span class="o">=</span>/etc/hosts <span class="nv">dest</span><span class="o">=</span>/etc/hosts <span class="nv">owner</span><span class="o">=</span>root <span class="nv">group</span><span class="o">=</span>root <span class="nv">mode</span><span class="o">=</span>0644</code></pre></figure>
+
+<p>Now I’m ready to execute my playbook applying cloudera prerequisites on each node of cloudera hostgroup.
+I launch the command ansible-playbook using the playbook as arguments and using the flag “-k”.
+The flags -k allow to insert the password of all cloudera hosts in interactive way.
+Ansible playbook can be also executed in other environment where there is an password-less ssh connection or hosts with different root passwords.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@cloudera01 ~]# ansible-playbook cloudera-prerequisites.yml <span class="nt">-k</span>
+SSH password: <span class="c">## Insert root password of all cloudera hosts</span>
+
+PLAY <span class="o">[</span>cloudera] <span class="k">***************************************************************</span>
+
+GATHERING FACTS <span class="k">***************************************************************</span>
+ok: <span class="o">[</span>cloudera04]
+ok: <span class="o">[</span>cloudera01]
+ok: <span class="o">[</span>cloudera03]
+ok: <span class="o">[</span>cloudera02]
+
+TASK: <span class="o">[</span>selinux <span class="nv">state</span><span class="o">=</span>disabled] <span class="k">************************************************</span>
+changed: <span class="o">[</span>cloudera04]
+changed: <span class="o">[</span>cloudera03]
+changed: <span class="o">[</span>cloudera01]
+changed: <span class="o">[</span>cloudera02]
+
+TASK: <span class="o">[</span>sysctl <span class="nv">name</span><span class="o">=</span>net.ipv6.conf.all.disable_ipv6 <span class="nv">value</span><span class="o">=</span>1 <span class="nv">state</span><span class="o">=</span>present] <span class="k">******</span>
+ok: <span class="o">[</span>cloudera01]
+ok: <span class="o">[</span>cloudera04]
+ok: <span class="o">[</span>cloudera03]
+ok: <span class="o">[</span>cloudera02]
+
+TASK: <span class="o">[</span>sysctl <span class="nv">name</span><span class="o">=</span>net.ipv6.conf.default.disable_ipv6 <span class="nv">value</span><span class="o">=</span>1 <span class="nv">state</span><span class="o">=</span>present] <span class="k">***</span>
+ok: <span class="o">[</span>cloudera04]
+ok: <span class="o">[</span>cloudera03]
+ok: <span class="o">[</span>cloudera01]
+ok: <span class="o">[</span>cloudera02]
+
+TASK: <span class="o">[</span>authorized_key <span class="nv">user</span><span class="o">=</span>root <span class="nv">key</span><span class="o">=</span><span class="s2">"ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA8aFJa2vXcrt42PmzIT8/9rFc4JQHS7ElV7p11l7KrV3Kq9IqnPaWei+u6zJ0zTW/J1DvOalzzT23tMakAMPpsKm/LEAQnvKA3Ytc0K+vtHH7tJaAB0QJAoq2rBocj7R+RJtnU8VvQxRyCYELDYoTLLjCKBjvyDN7908ojuuqHdb4LpIiTnge5WcofpeD64P1J4PN6sYAu+nTC/ykg4a75iiuyoWuocwfRgS9i1aFdyHHnY40rB8/Er+vzn9bQRbNTYjwo8kEaQt1ZM4ZRjzhM3gUUwM0JUjeSDN3soA+Dq4tW052nxiL5xEWsCcTLcy5cd6fChzEQShPP8xnee8btw== root@cloudera01.example.com"</span><span class="o">]</span> <span class="k">***</span>
+ok: <span class="o">[</span>cloudera01]
+ok: <span class="o">[</span>cloudera03]
+ok: <span class="o">[</span>cloudera02]
+ok: <span class="o">[</span>cloudera04]
+
+TASK: <span class="o">[</span>copy <span class="nv">src</span><span class="o">=</span>/etc/hosts <span class="nv">dest</span><span class="o">=</span>/etc/hosts <span class="nv">owner</span><span class="o">=</span>root <span class="nv">group</span><span class="o">=</span>root <span class="nv">mode</span><span class="o">=</span>0644] <span class="k">***</span>
+ok: <span class="o">[</span>cloudera02]
+ok: <span class="o">[</span>cloudera01]
+ok: <span class="o">[</span>cloudera03]
+ok: <span class="o">[</span>cloudera04]
+
+PLAY RECAP <span class="k">********************************************************************</span>
+cloudera01 : <span class="nv">ok</span><span class="o">=</span>6 <span class="nv">changed</span><span class="o">=</span>1 <span class="nv">unreachable</span><span class="o">=</span>0 <span class="nv">failed</span><span class="o">=</span>0
+cloudera02 : <span class="nv">ok</span><span class="o">=</span>6 <span class="nv">changed</span><span class="o">=</span>1 <span class="nv">unreachable</span><span class="o">=</span>0 <span class="nv">failed</span><span class="o">=</span>0
+cloudera03 : <span class="nv">ok</span><span class="o">=</span>6 <span class="nv">changed</span><span class="o">=</span>1 <span class="nv">unreachable</span><span class="o">=</span>0 <span class="nv">failed</span><span class="o">=</span>0
+cloudera04 : <span class="nv">ok</span><span class="o">=</span>6 <span class="nv">changed</span><span class="o">=</span>1 <span class="nv">unreachable</span><span class="o">=</span>0 <span class="nv">failed</span><span class="o">=</span>0</code></pre></figure>
+
+<p>Reboot each system in order to apply selinux configuration</p>
+
+<p>When a playbook is executed, Ansible generate a report containing detailed information about the execution of each tasks.
+In this case ansible informs you that a reboot of each node is required in order to apply to reload selinux configuration.</p>
+
+<p>Ansible executes idempotent configuration, it means that the same playbook can be reapplied on an already configured node without modifying any configuration.
+This feature can be useful to check configuration changes or when a new host is added in a hostgroup.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2015-05-09T00:00:00+00:00">May 9, 2015</time></p>
+        
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/2015/05/09/install_and_configure_gpfs_4.1_filesystem_on_linux_centos_6.6.html" class="pagination--pager" title="Install and configure GPFS 4.1 filesystem on Linux Centos 6.6
+">Previous</a>
+    
+    
+      <a href="/2015/05/23/ha_two_node_gpfs_cluster_with_tie-breaker_disk.html" class="pagination--pager" title="HA two node GPFS cluster with tie-breaker disk
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2020/04/05/use_github_actions_to_create_jekyll_post_from_github_issue.html" rel="permalink">Use GitHub Actions to create Jekyll post from GitHub issue
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">This post describe a GitHub Actions workflow that allow to create new post on a Jekyll web site contained in a GitHub repository using the issue editor of Gi...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2016/03/01/distrubuted_sql_query_using_sparksql_hdfs_sqoop.html" rel="permalink">Distributed SQL Query using SparkSQL, HDFS and Sqoop
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Spark SQL: A brief introduction
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2016/02/16/apache_spark_distributed_computation_of_pi_in_8_lines_of_python_code.html" rel="permalink">Apache Spark – Distributed computation of π in 8 lines of Python code
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">In this post I show how to write a distributed application computing an approximation of pi number though a Spark application using Python.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2016/01/06/import_mysql_data_in_elasticsearch_server.html" rel="permalink">Import Mysql data in Elasticsearch server
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Elasticsearch is a near real-time search server based on Lucene. It allows to create a distributed full-text search engine. It’s an opensource software devel...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2020 SYSADMIN CONTINUOUS IMPROVEMENT. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

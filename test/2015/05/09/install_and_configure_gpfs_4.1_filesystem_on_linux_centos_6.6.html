@@ -1,0 +1,741 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.19.1 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Install and configure GPFS 4.1 filesystem on Linux Centos 6.6 - SYSADMIN CONTINUOUS IMPROVEMENT</title>
+<meta name="description" content="The General Parallel File System (GPFS) is a high-performance clustered file system developed by IBM. It can be deployed in shared-disk infrastructure or in shared-nothing architecture. It’s used by many large company and in serveral supercomputers on the Top 500 List. ">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="SYSADMIN CONTINUOUS IMPROVEMENT">
+<meta property="og:title" content="Install and configure GPFS 4.1 filesystem on Linux Centos 6.6">
+<meta property="og:url" content="/2015/05/09/install_and_configure_gpfs_4.1_filesystem_on_linux_centos_6.6.html">
+
+
+  <meta property="og:description" content="The General Parallel File System (GPFS) is a high-performance clustered file system developed by IBM. It can be deployed in shared-disk infrastructure or in shared-nothing architecture. It’s used by many large company and in serveral supercomputers on the Top 500 List. ">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2015-05-09T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="/2015/05/09/install_and_configure_gpfs_4.1_filesystem_on_linux_centos_6.6.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="SYSADMIN CONTINUOUS IMPROVEMENT Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/logo_sysadminci.png" alt=""></a>
+        
+        <a class="site-title" href="/">
+          SYSADMIN CONTINUOUS IMPROVEMENT
+          <span class="site-subtitle">Useful tips and tools for system administrators</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about/">About me</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle Menu</label>
+  <ul class="nav__items">
+    
+      <li>
+        
+          <span class="nav__sub-title">TAGS</span>
+        
+
+        
+        <ul>
+          
+            <li><a href="/tag/apache">apache</a></li>
+          
+            <li><a href="/tag/automation">automation</a></li>
+          
+            <li><a href="/tag/cluster">cluster</a></li>
+          
+            <li><a href="/tag/flume">flume</a></li>
+          
+            <li><a href="/tag/git">git</a></li>
+          
+            <li><a href="/tag/github">github</a></li>
+          
+            <li><a href="/tag/hadoop">hadoop</a></li>
+          
+            <li><a href="/tag/haproxy">haproxy</a></li>
+          
+            <li><a href="/tag/jekyll">jekyll</a></li>
+          
+            <li><a href="/tag/linux">linux</a></li>
+          
+            <li><a href="/tag/python">python</a></li>
+          
+            <li><a href="/tag/spark">spark</a></li>
+          
+        </ul>
+        
+      </li>
+    
+  </ul>
+</nav>
+
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Install and configure GPFS 4.1 filesystem on Linux Centos 6.6">
+    <meta itemprop="description" content="The General Parallel File System (GPFS) is a high-performance clustered file system developed by IBM. It can be deployed in shared-disk infrastructure or in shared-nothing architecture. It’s used by many large company and in serveral supercomputers on the Top 500 List.">
+    <meta itemprop="datePublished" content="2015-05-09T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Install and configure GPFS 4.1 filesystem on Linux Centos 6.6
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>The General Parallel File System (GPFS) is a high-performance clustered file system developed by IBM. It can be deployed in shared-disk infrastructure or in shared-nothing architecture. It’s used by many large company and in serveral supercomputers on the Top 500 List.</p>
+
+<p>GPFS allows to configure a high available filesystem allowing concurrent access from a cluster of nodes.
+Cluster nodes can be server using AIX, Linux or Windows operatng system.</p>
+
+<p>GPFS provides high performance allowing striping blocks of data over multiple disk reading and writing this blocks in parallel. It offers also block replication over different disks in order to guarantee the availability of the filesystem also during disk failures.</p>
+
+<p>The following list contains some of the most interesting features of GPFS:</p>
+
+<ul>
+  <li>Provide a POSIX compliant interface</li>
+  <li>Allow filesystem mounting to client accessing data though LAN connection</li>
+  <li>Many filesystem maintenance tasks can be performed while the filesystem is mounted</li>
+  <li>Support quota</li>
+  <li>Distributes metadata over different disks</li>
+  <li>Have really high scalability limits</li>
+</ul>
+
+<p>This post describes the step required to implement a basic configuration of GPFS filesystem on a cluster composed by two Centos 6.6 servers.</p>
+
+<p><img src="/assets/2015-05-09-install_and_configure_gpfs_4.1_filesystem_on_linux_centos_6.6_img1.jpg" alt="gpfs architecture diagram" class="center-image" /></p>
+
+<p>The server architectures showed in the images is composed by two server gpfs01 and gpfs02 sharing two disk device (sdb and sdc) each one of 10 GB size. Each server has an ethernet connection on subnet 172.17.0.0/16 allowing the communication between gpfs cluster nodes. The gpfs version used for installation is 4.1.0-5.</p>
+
+<p>The following sequence of tasks show how install and configure GPFS on this couple of servers.</p>
+
+<h2 id="1-install-gpfs-rpm">1. Install GPFS rpm</h2>
+
+<p>Install gpfs rpm on both nodes</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@gpfs01 gpfs_repo]# find <span class="nv">$PWD</span>
+/root/gpfs_repo
+/root/gpfs_repo/gpfs.ext-4.1.0-5.x86_64.rpm
+/root/gpfs_repo/gpfs.docs-4.1.0-5.noarch.rpm
+/root/gpfs_repo/kmod-gpfs-4.1.0-5.15.sdl6.x86_64.rpm
+/root/gpfs_repo/gpfs.base-4.1.0-5.0.1.x86_64.rpm
+/root/gpfs_repo/gpfs.gskit-8.0.50-32.x86_64.rpm
+/root/gpfs_repo/gpfs.msg.en_US-4.1.0-5.noarch.rpm
+/root/gpfs_repo/gpfs.gpl-4.1.0-5.noarch.rpm
+
+<span class="o">[</span>root@gpfs02 gpfs_repo]# yum localinstall <span class="k">*</span>.rpm
+
+<span class="o">[</span>root@gpfs02 gpfs_repo]# find <span class="nv">$PWD</span>
+/root/gpfs_repo
+/root/gpfs_repo/gpfs.ext-4.1.0-5.x86_64.rpm
+/root/gpfs_repo/gpfs.docs-4.1.0-5.noarch.rpm
+/root/gpfs_repo/kmod-gpfs-4.1.0-5.15.sdl6.x86_64.rpm
+/root/gpfs_repo/gpfs.base-4.1.0-5.0.1.x86_64.rpm
+/root/gpfs_repo/gpfs.gskit-8.0.50-32.x86_64.rpm
+/root/gpfs_repo/gpfs.msg.en_US-4.1.0-5.noarch.rpm
+/root/gpfs_repo/gpfs.gpl-4.1.0-5.noarch.rpm
+
+<span class="o">[</span>root@gpfs01 gpfs_repo]# yum localinstall <span class="k">*</span>.rpm</code></pre></figure>
+
+<h2 id="2-configure-etchosts">2. Configure /etc/hosts</h2>
+
+<p>Configure hosts file on both nodes in order to allow name resolution.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@gpfs01 gpfs_repo]# <span class="nb">cat</span> /etc/hosts
+127.0.0.1 localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1 localhost localhost.localdomain localhost6 localhost6.localdomain6
+172.17.0.101 gpfs01 gpfs01.example.com
+172.17.0.102 gpfs02 gpfs02.example.com
+
+<span class="o">[</span>root@gpfs02 gpfs_repo]# <span class="nb">cat</span> /etc/hosts
+127.0.0.1 localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1 localhost localhost.localdomain localhost6 localhost6.localdomain6
+172.17.0.101 gpfs01 gpfs01.example.com
+172.17.0.102 gpfs02 gpfs02.example.com</code></pre></figure>
+
+<h2 id="3-exchange-root-ssh-key-between-nodes">3. Exchange root ssh key between nodes</h2>
+
+<p>GPFS requires that each gpfs cluster nodes can execute ssh commands on all other nodes using root user in order to allow remote administration of other nodes. In order to allow it you have to exchange ssh root keys between each cluster node.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@gpfs01 ~]# ssh-copy-id root@gpfs01
+<span class="o">[</span>root@gpfs01 ~]# ssh-copy-id root@gpfs02
+<span class="o">[</span>root@gpfs02 ~]# ssh-copy-id root@gpfs01
+<span class="o">[</span>root@gpfs02 ~]# ssh-copy-id root@gpfs02</code></pre></figure>
+
+<h2 id="4-test-ssh-password-less-connection">4. Test ssh password-less connection</h2>
+
+<p>Verify the previous step executing a ssh connection between each couple of nodes.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@gpfs01 ~]# ssh gpfs01 <span class="nb">date
+</span>Sat Apr 18 10:52:08 CEST 2015
+
+<span class="o">[</span>root@gpfs01 ~]# ssh gpfs02 <span class="nb">date
+</span>Sat Apr 18 10:52:09 CEST 2015
+
+<span class="o">[</span>root@gpfs02 ~]# ssh gpfs01 <span class="nb">date
+</span>Mon Apr 13 21:44:52 CEST 2015
+
+<span class="o">[</span>root@gpfs02 ~]# ssh gpfs02 <span class="nb">date
+</span>Mon Apr 13 21:44:53 CEST 2015</code></pre></figure>
+
+<h2 id="5-compile-gpfs-portability-layer-rpm">5. Compile GPFS portability layer rpm</h2>
+
+<p>The GPFS portability layer is a loadable kernel module that allows the GPFS daemon to interact with the operating system.</p>
+
+<p>IBM provides the source code of this module. It must be compiled for the kernel version used by your servers. This step can be executed on a single node then the rpm containing the kernel module can be distributed and installed over all the other gpfs nodes. In this example this module will be compiled on server gpfs01.</p>
+
+<p>In order to avoid the error “Cannot determine the distribution type. /etc/redhat-release is present, but the release name is not recognized. Specify the distribution type explicitly.” during module compiling replace content of /etc/redhat-release with the string “Red Hat Enterprise Linux Server release 6.6 (Santiago)”.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@gpfs01 src]# <span class="nb">mv</span> /etc/redhat-release /etc/redhat-release.original
+<span class="o">[</span>root@gpfs01 src]# <span class="nb">echo</span> <span class="s2">"Red Hat Enterprise Linux Server release 6.6 (Santiago)"</span> &amp;gt<span class="p">;</span>&amp;gt<span class="p">;</span> /etc/redhat-release</code></pre></figure>
+
+<p>In order to avoid the error “Cannot find a valid kernel include directory” during module compiling install the rpm required for compile module for your kernel version (kernel source, rpmbuild, …).</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@gpfs01 src]# yum <span class="nb">install </span>kernel-headers-2.6.32-504.12.2.el6
+
+<span class="o">[</span>root@gpfs01 src]# yum <span class="nb">install </span>kernel-devel-2.6.32-504.12.2.el6
+<span class="o">[</span>root@gpfs01 src]# yum <span class="nb">install </span>imake gcc-c++ rpmbuild</code></pre></figure>
+
+<h2 id="6-install-gpfs-portability-layer-rpm">6. Install GPFS portability layer rpm</h2>
+
+<p>Distribute GPFS portability layer rpm on each node and install it.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@gpfs01 src]# scp /root/rpmbuild/RPMS/x86_64/gpfs.gplbin-2.6.32-504.12.2.el6.x86_64-4.1.0-5.x86_64.rpm gpfs02:/tmp/gpfs.gplbin-2.6.32-504.12.2.el6.x86_64-4.1.0-5.x86_64.rpm
+
+<span class="o">[</span>root@gpfs01 src]# yum localinstall /root/rpmbuild/RPMS/x86_64/gpfs.gplbin-2.6.32-504.12.2.el6.x86_64-4.1.0-5.x86_64.rpm
+
+<span class="o">[</span>root@gpfs02 ~]# yum localinstall /tmp/gpfs.gplbin-2.6.32-504.12.2.el6.x86_64-4.1.0-5.x86_64.rpm</code></pre></figure>
+
+<h2 id="7-create-gpfs-cluster">7. Create GPFS cluster</h2>
+
+<p>In this step the cluster is created adding the node gpfs01 with the role of cluster manager and quorum manager. In the next steps the gpfs02 node will be added to the cluster.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@gpfs01 ~]# /usr/lpp/mmfs/bin/mmcrcluster <span class="nt">-N</span> gpfs01:manager-quorum <span class="nt">-p</span> gpfs01 <span class="nt">-r</span> /usr/bin/ssh <span class="nt">-R</span> /usr/bin/scp
+
+mmcrcluster: Performing preliminary node verification ...
+mmcrcluster: Processing quorum and other critical nodes ...
+mmcrcluster: Finalizing the cluster data structures ...
+mmcrcluster: Command successfully completed
+mmcrcluster: Warning: Not all nodes have proper GPFS license designations.
+Use the mmchlicense <span class="nb">command </span>to designate licenses as needed</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@gpfs01 ~]# /usr/lpp/mmfs/bin/mmlscluster
+
+<span class="o">===============================================================================</span>
+| Warning: |
+| This cluster contains nodes that <span class="k">do </span>not have a proper GPFS license |
+| designation. This violates the terms of the GPFS licensing agreement. |
+| Use the mmchlicense <span class="nb">command </span>and assign the appropriate GPFS licenses |
+| to each of the nodes <span class="k">in </span>the cluster. For more information about GPFS |
+| license designation, see the Concepts, Planning, and Installation Guide. |
+<span class="o">===============================================================================</span>
+GPFS cluster information
+<span class="o">========================</span>
+GPFS cluster name: gpfs01
+GPFS cluster <span class="nb">id</span>: 14526312809412325839
+GPFS UID domain: gpfs01
+Remote shell <span class="nb">command</span>: /usr/bin/ssh
+Remote file copy <span class="nb">command</span>: /usr/bin/scp
+Repository <span class="nb">type</span>: CCR
+
+Node Daemon node name IP address Admin node name Designation
+<span class="nt">--------------------------------------------------------------------</span>
+1 gpfs01 172.17.0.101 gpfs01 quorum-manager</code></pre></figure>
+
+<p>You need to accept the GPFS server license for node gpfs01.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@gpfs01 ~]# /usr/lpp/mmfs/bin/mmchlicense server <span class="nt">--accept</span> <span class="nt">-N</span> gpfs01
+
+The following nodes will be designated as possessing GPFS server licenses:
+gpfs01
+mmchlicense: Command successfully completed</code></pre></figure>
+
+<h2 id="8-start-gpfs-cluster-on-node-gpfs01">8. Start gpfs cluster on node gpfs01</h2>
+
+<p>Start gpfs cluster on node gpfs01</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@gpfs01 ~]# /usr/lpp/mmfs/bin/mmstartup <span class="nt">-N</span> gpfs01
+Fri Apr 24 18:43:35 CEST 2015: mmstartup: Starting GPFS ...</code></pre></figure>
+
+<p>Verify the node status</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@gpfs01 ~]# /usr/lpp/mmfs/bin/mmgetstate <span class="nt">-a</span>
+
+Node number Node name GPFS state
+<span class="nt">------------------------------------------</span>
+1 gpfs01 active</code></pre></figure>
+
+<h2 id="9-add-the-second-node-to-gpfs">9. Add the second node to GPFS</h2>
+
+<p>In this step the second server gpfs02 will be added to the gpfs cluster.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@gpfs01 ~]# /usr/lpp/mmfs/bin/mmaddnode <span class="nt">-N</span> gpfs02
+Fri Apr 24 18:44:54 CEST 2015: mmaddnode: Processing node gpfs02
+mmaddnode: Command successfully completed
+mmaddnode: Warning: Not all nodes have proper GPFS license designations.
+Use the mmchlicense <span class="nb">command </span>to designate licenses as needed.
+mmaddnode: Propagating the cluster configuration data to all
+affected nodes. This is an asynchronous process.
+
+Now the <span class="nb">command </span>mmlscluster shows that the cluster is composed by two servers.
+
+<span class="o">[</span>root@gpfs01 ~]# /usr/lpp/mmfs/bin/mmlscluster
+
+GPFS cluster information
+
+<span class="o">========================</span>
+GPFS cluster name: gpfs01
+GPFS cluster <span class="nb">id</span>: 14526312809412325839
+GPFS UID domain: gpfs01
+Remote shell <span class="nb">command</span>: /usr/bin/ssh
+Remote file copy <span class="nb">command</span>: /usr/bin/scp
+Repository <span class="nb">type</span>: CCR
+
+Node Daemon node name IP address Admin node name Designation
+<span class="nt">--------------------------------------------------------------------</span>
+1 gpfs01 172.17.0.101 gpfs01 quorum-manager
+2 gpfs02 172.17.0.102 gpfs02</code></pre></figure>
+
+<h2 id="10-start-gpfs-on-gpfs02-node">10. Start GPFS on gpfs02 node</h2>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@gpfs01 ~]# /usr/lpp/mmfs/bin/mmstartup <span class="nt">-N</span> gpfs02
+Fri Apr 24 18:47:32 CEST 2015: mmstartup: Starting GPFS ...
+
+<span class="o">[</span>root@gpfs01 ~]# /usr/lpp/mmfs/bin/mmgetstate <span class="nt">-a</span>
+
+Node number Node name GPFS state
+<span class="nt">------------------------------------------</span>
+1 gpfs01 active
+2 gpfs02 active</code></pre></figure>
+
+<h2 id="11-create-nsd-configuration">11. Create NSD configuration</h2>
+
+<p>Now you have to create a file containing the configuration of the disk that will be used by gpfs. The disk used by GPFS are called Network Shared Disk (NSD) using GPFS terminology.</p>
+
+<p>The file diskdef.txt showed below contain the NSD configuration used by GPFS.</p>
+
+<p>Two NSD disk has been defined, their name are mynsd1 and mynsd2 and the device files of these disks are respectively /dev/sdb and /dev/sdc. Both disks will be used to store data and metadata.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@gpfs01 ~]# <span class="nb">cat </span>diskdef.txt
+
+%nsd:
+<span class="nv">device</span><span class="o">=</span>/dev/sdb
+<span class="nv">nsd</span><span class="o">=</span>mynsd1
+<span class="nv">usage</span><span class="o">=</span>dataAndMetadata
+
+%nsd:
+<span class="nv">device</span><span class="o">=</span>/dev/sdc
+<span class="nv">nsd</span><span class="o">=</span>mynsd2
+<span class="nv">usage</span><span class="o">=</span>dataAndMetadata</code></pre></figure>
+
+<p>Configure the NSD using this configuration file</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@gpfs01 ~]# /usr/lpp/mmfs/bin/mmcrnsd <span class="nt">-F</span> diskdef.txt
+mmcrnsd: Processing disk sdb
+mmcrnsd: Processing disk sdc
+mmcrnsd: Propagating the cluster configuration data to all
+affected nodes. This is an asynchronous process.</code></pre></figure>
+
+<p>Show the NSD configuration</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@gpfs01 ~]# /usr/lpp/mmfs/bin/mmlsnsd
+
+File system Disk name NSD servers
+<span class="nt">---------------------------------------------------------------------------</span>
+<span class="o">(</span>free disk<span class="o">)</span> mynsd1 <span class="o">(</span>directly attached<span class="o">)</span>
+<span class="o">(</span>free disk<span class="o">)</span> mynsd2 <span class="o">(</span>directly attached<span class="o">)</span></code></pre></figure>
+
+<h2 id="13-create-gpfs-filesystem">13. Create GPFS filesystem</h2>
+
+<p>The following command create a gpfs filesystem called fs_gpfs01 using the NSD defined in diskdef.txt file that will be mounted on /fs_gpfs01 mount point</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@gpfs01 ~]# /usr/lpp/mmfs/bin/mmcrfs fs_gpfs01 <span class="nt">-F</span> diskdef.txt <span class="nt">-A</span> <span class="nb">yes</span> <span class="nt">-T</span> /fs_gpfs01
+
+The following disks of fs_gpfs01 will be formatted on node gpfs01.example.com:
+mynsd1: size 10240 MB
+mynsd2: size 10240 MB
+Formatting file system ...
+Disks up to size 103 GB can be added to storage pool system.
+Creating Inode File
+86 % <span class="nb">complete </span>on Fri Apr 24 19:30:27 2015
+100 % <span class="nb">complete </span>on Fri Apr 24 19:30:27 2015
+Creating Allocation Maps
+Creating Log Files
+Clearing Inode Allocation Map
+Clearing Block Allocation Map
+Formatting Allocation Map <span class="k">for </span>storage pool system
+Completed creation of file system /dev/fs_gpfs01.
+mmcrfs: Propagating the cluster configuration data to all
+affected nodes. This is an asynchronous process.</code></pre></figure>
+
+<h2 id="14-mountunmount-gpfs">14. Mount/Unmount gpfs</h2>
+
+<p>This step shows some useful command to mount and unmount the gpfs filesystem</p>
+
+<ul>
+  <li>Mount on all nodes</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@gpfs01 ~]# /usr/lpp/mmfs/bin/mmmount /fs_gpfs01 <span class="nt">-a</span>
+Thu May 7 21:30:33 CEST 2015: mmmount: Mounting file systems ...</code></pre></figure>
+
+<ul>
+  <li>Unmount on all nodes</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@gpfs01 ~]# /usr/lpp/mmfs/bin/mmumount /fs_gpfs01 <span class="nt">-a</span></code></pre></figure>
+
+<ul>
+  <li>Mount on local node</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@gpfs01 ~]# /usr/lpp/mmfs/bin/mmmount /fs_gpfs01</code></pre></figure>
+
+<ul>
+  <li>Unmount on local node</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@gpfs01 ~]# /usr/lpp/mmfs/bin/mmumount /fs_gpfs01</code></pre></figure>
+
+<h2 id="15-verify-mount-gpfs-filesystem">15. Verify mount gpfs filesystem</h2>
+
+<p>You can verify that gpfs filesystem is mounted using the command mmlsmount or using df</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@gpfs01 ~]# /usr/lpp/mmfs/bin/mmlsmount all
+File system fs_gpfs01 is mounted on 2 nodes.
+
+<span class="o">[</span>root@gpfs01 ~]# <span class="nb">df
+</span>Filesystem 1K-blocks Used Available Use% Mounted on
+/dev/mapper/vg_gpfs01-lv_root 17938864 1278848 15742104 8% /
+tmpfs 1958512 0 1958512 0% /dev/shm
+/dev/sda1 487652 69865 392187 16% /boot
+/dev/fs_gpfs01 20971520 533248 20438272 3% /fs_gpfs01</code></pre></figure>
+
+<h2 id="16-log-location">16. Log location</h2>
+
+<p>GPFS filesystem are located in the directory gpfs /var/adm/ras</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@gpfs01 ~]# <span class="nb">ls</span> <span class="nt">-latr</span> /var/adm/ras
+total 20
+drwxr-xr-x. 3 root root 4096 Apr 13 16:46 ..
+lrwxrwxrwx 1 root root 35 Apr 24 20:33 mmfs.log.previous -&amp;gt<span class="p">;</span> mmfs.log.2015.04.24.20.33.44.gpfs01
+<span class="nt">-rw-r--r--</span> 1 root root 3835 May 7 21:11 mmfs.log.2015.04.24.20.33.44.gpfs01
+<span class="nt">-rw-r--r--</span> 1 root root 195 May 7 21:11 mmsdrserv.log
+lrwxrwxrwx 1 root root 35 May 7 21:24 mmfs.log.latest -&amp;gt<span class="p">;</span> mmfs.log.2015.05.07.21.24.18.gpfs01
+drwxr-xr-x. 2 root root 4096 May 7 21:24 <span class="nb">.</span>
+<span class="nt">-rw-r--r--</span> 1 root root 2717 May 7 21:24 mmfs.log.2015.05.07.21.24.18.gpfs01</code></pre></figure>
+
+<p>GPFS records also system and disk failure using syslog, gpfs error log can be retrieved using the command:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">grep</span> <span class="s2">"mmfs:"</span> /var/log/messages</code></pre></figure>
+
+<h2 id="17-add-usrlppmmfsbin-to-path-environment-variable">17. Add /usr/lpp/mmfs/bin/ to PATH environment variable</h2>
+
+<p>In order to avoid to use the full path for gpfs command the directory /usr/lpp/mmfs/bin/ can be added to the environment PATH variable of root</p>
+
+<p>Add the line “PATH=$PATH:/usr/lpp/mmfs/bin/” in /root/.bash_profile before the line “export PATH”</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2015-05-09T00:00:00+00:00">May 9, 2015</time></p>
+        
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/2015/05/09/haproxy_basic_configuration_on_ubuntu_14.04.html" class="pagination--pager" title="HAProxy basic configuration on Ubuntu 14.04
+">Previous</a>
+    
+    
+      <a href="/2015/05/09/install_cloudera_prerequisites_with_ansible.html" class="pagination--pager" title="Install Cloudera prerequisites with Ansible
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2020/04/05/use_github_actions_to_create_jekyll_post_from_github_issue.html" rel="permalink">Use GitHub Actions to create Jekyll post from GitHub issue
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">This post describe a GitHub Actions workflow that allow to create new post on a Jekyll web site contained in a GitHub repository using the issue editor of Gi...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2016/03/01/distrubuted_sql_query_using_sparksql_hdfs_sqoop.html" rel="permalink">Distributed SQL Query using SparkSQL, HDFS and Sqoop
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Spark SQL: A brief introduction
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2016/02/16/apache_spark_distributed_computation_of_pi_in_8_lines_of_python_code.html" rel="permalink">Apache Spark – Distributed computation of π in 8 lines of Python code
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">In this post I show how to write a distributed application computing an approximation of pi number though a Spark application using Python.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2016/01/06/import_mysql_data_in_elasticsearch_server.html" rel="permalink">Import Mysql data in Elasticsearch server
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Elasticsearch is a near real-time search server based on Lucene. It allows to create a distributed full-text search engine. It’s an opensource software devel...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2020 SYSADMIN CONTINUOUS IMPROVEMENT. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
