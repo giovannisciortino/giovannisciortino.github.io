@@ -18,7 +18,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="SYSADMIN CONTINUOUS IMPROVEMENT">
 <meta property="og:title" content="MODIFICA EFFETTUATA NEL BRANCH TEST">
-<meta property="og:url" content="/2020/04/05/use_github_actions_to_create_jekyll_post_from_github_issue.html">
+<meta property="og:url" content="/test/2020/04/05/use_github_actions_to_create_jekyll_post_from_github_issue.html">
 
 
   <meta property="og:description" content="This post describe a GitHub Actions workflow that allow to create new post on a Jekyll web site contained in a GitHub repository using the issue editor of GitHub website.  GitHub Actions [1] makes it easy to automate all your software workflows, it build, test, and deploy your code right from GitHub.  Jekyll [2] is a simple, blog-aware, static site generator perfect for personal, project, or organization sites.  The article [3], describing the disadvantages of static site generator software compared to CMS software, includes among them the following “Publishing the site requires tools and code on your computer”.  The GitHub Actions workflow described in this post allows to mitigate this problem. This workflow allows to use the web interface of GitHub to create Jekyll posts exploiting the “MarkDown editor” and “check spelling” features contained in the issue editor of GitHub web site without require any tool installed.  The automation described in this post is contained in three files:     A github issue template [4] containing a template of a new jekyll post file   A github issue configuration file [5] that allow to create also github issue not respecting the template described in 1.   A Github Workflow [6]   The GitHub workflow has been reported also below in order to describe its main components:  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 name: A workflow to create a jekyll post from github issue  on:    issue_comment:      types: [created]  jobs:    build:      name: A job to create a jekyll post from github issue      runs-on: ubuntu-latest      if: github.event.comment.body == &#39;publish&#39;      steps:        - name: Checkout master branch          uses: actions/checkout@master         - name: Create jekyll post file          if: success() &amp;&amp; github.event.issue.user.login == env.GITHUB_ACCOUNT_JEKYLL_OWNER          run: |            cat &lt;&lt; &#39;EOF&#39; &gt; $POST_DIRECTORY/$            $            EOF          env:            GITHUB_ACCOUNT_JEKYLL_OWNER: &#39;giovannisciortino&#39;            POST_DIRECTORY: &#39;_posts&#39;          - name: Commit files          if: success()          run: |            git config --local user.name &quot;$GIT_USER_NAME&quot;            git config --local user.email &quot;$GIT_USER_EMAIL&quot;            git add --all            # commit only if there are changes            if [[ `git status --porcelain` ]]; then              git commit -m &quot;$DEFAULT_COMMIT_MESSAGE&quot; -a            fi          env:            GIT_USER_NAME: &#39;Giovanni Sciortino&#39;            GIT_USER_EMAIL: &#39;giovannibattistasciortino@gmail.com&#39;            DEFAULT_COMMIT_MESSAGE: &#39;New jekyll post create from github issue&#39;          - name: Push changes          if: success()          uses: ad-m/github-push-action@master          with:            github_token: $   This GitHub workflow contains the following main elements:    it contains the trigger executing it (line 3-4). It’s triggered when a new comment is added to a github issue   it execute the four steps of the job contained in the workflow when someone write the comment “publish” in the GitHub issue (line 9)   The first step clone the repository containing the Jekyll git repository in a ubuntu docker container (line 11-12)   The second step verify that the author of the command publish is the owner of the GitHub repository and create the Jekyll post reading the content from the title and the first message of the github issue (line 14-22)   The third step create a new commit using the file modified in the second step (line 24-37)   The forth sep push the new commit to GitHub (line 39-43)   These three files allow to implement the workflow described in this post. The automation described in this post has been used to create this post itself, [7] is the GitHub issue used to create this post.  [1] https://github.com/features/actions  [2] https://jekyllrb.com/  [3] https://www.strattic.com/jekyll-hugo-wordpress-pros-cons-static-site-generators/  [4] https://github.com/giovannisciortino/giovannisciortino.github.io/blob/master/.github/ISSUE_TEMPLATE/jekill_post_new_template.md  [5] https://github.com/giovannisciortino/giovannisciortino.github.io/blob/master/.github/ISSUE_TEMPLATE/config.yml  [6] https://github.com/giovannisciortino/giovannisciortino.github.io/blob/master/.github/workflows/create_jekyll_post_from_issue.yamlhttps://raw.githubusercontent.com/giovannisciortino/giovannisciortino.github.io/master/.github/workflows/create_jekyll_post_from_issue.yaml  ">
@@ -36,7 +36,7 @@
 
 
 
-<link rel="canonical" href="/2020/04/05/use_github_actions_to_create_jekyll_post_from_github_issue.html">
+<link rel="canonical" href="/test/2020/04/05/use_github_actions_to_create_jekyll_post_from_github_issue.html">
 
 
 
@@ -47,7 +47,7 @@
     
       "@type": "Person",
       "name": null,
-      "url": "/"
+      "url": "/test/"
     
   }
 </script>
@@ -60,7 +60,7 @@
 <!-- end _includes/seo.html -->
 
 
-<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="SYSADMIN CONTINUOUS IMPROVEMENT Feed">
+<link href="/test/feed.xml" type="application/atom+xml" rel="alternate" title="SYSADMIN CONTINUOUS IMPROVEMENT Feed">
 
 <!-- https://t.co/dKP3o1e -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -70,7 +70,7 @@
 </script>
 
 <!-- For all browsers -->
-<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/test/assets/css/main.css">
 
 <!--[if IE]>
   <style>
@@ -118,14 +118,14 @@
     <div class="masthead__menu">
       <nav id="site-nav" class="greedy-nav">
         
-          <a class="site-logo" href="/"><img src="/assets/logo_sysadminci.png" alt=""></a>
+          <a class="site-logo" href="/test/"><img src="/test/assets/logo_sysadminci.png" alt=""></a>
         
-        <a class="site-title" href="/">
+        <a class="site-title" href="/test/">
           SYSADMIN CONTINUOUS IMPROVEMENT
           <span class="site-subtitle">Useful tips and tools for system administrators</span>
         </a>
         <ul class="visible-links"><li class="masthead__menu-item">
-              <a href="/about/">About me</a>
+              <a href="/test/test/about/">About me</a>
             </li></ul>
         
         <button class="greedy-nav__toggle hidden" type="button">
@@ -172,29 +172,29 @@
         
         <ul>
           
-            <li><a href="/tag/apache">apache</a></li>
+            <li><a href="/test/test/tag/apache">apache</a></li>
           
-            <li><a href="/tag/automation">automation</a></li>
+            <li><a href="/test/test/tag/automation">automation</a></li>
           
-            <li><a href="/tag/cluster">cluster</a></li>
+            <li><a href="/test/test/tag/cluster">cluster</a></li>
           
-            <li><a href="/tag/flume">flume</a></li>
+            <li><a href="/test/test/tag/flume">flume</a></li>
           
-            <li><a href="/tag/git">git</a></li>
+            <li><a href="/test/test/tag/git">git</a></li>
           
-            <li><a href="/tag/github">github</a></li>
+            <li><a href="/test/test/tag/github">github</a></li>
           
-            <li><a href="/tag/hadoop">hadoop</a></li>
+            <li><a href="/test/test/tag/hadoop">hadoop</a></li>
           
-            <li><a href="/tag/haproxy">haproxy</a></li>
+            <li><a href="/test/test/tag/haproxy">haproxy</a></li>
           
-            <li><a href="/tag/jekyll">jekyll</a></li>
+            <li><a href="/test/test/tag/jekyll">jekyll</a></li>
           
-            <li><a href="/tag/linux">linux</a></li>
+            <li><a href="/test/test/tag/linux">linux</a></li>
           
-            <li><a href="/tag/python">python</a></li>
+            <li><a href="/test/test/tag/python">python</a></li>
           
-            <li><a href="/tag/spark">spark</a></li>
+            <li><a href="/test/test/tag/spark">spark</a></li>
           
         </ul>
         
@@ -417,11 +417,12 @@ The automation described in this post has been used to create this post itself, 
       
   <nav class="pagination">
     
-      <a href="/2016/03/01/distrubuted_sql_query_using_sparksql_hdfs_sqoop.html" class="pagination--pager" title="Distributed SQL Query using SparkSQL, HDFS and Sqoop
+      <a href="/test/2016/03/01/distrubuted_sql_query_using_sparksql_hdfs_sqoop.html" class="pagination--pager" title="Distributed SQL Query using SparkSQL, HDFS and Sqoop
 ">Previous</a>
     
     
-      <a href="#" class="pagination--pager disabled">Next</a>
+      <a href="/test/2020/04/21/test.html" class="pagination--pager" title="Articolo creato da issue sul branch test
+">Next</a>
     
   </nav>
 
@@ -445,7 +446,28 @@ The automation described in this post has been used to create this post itself, 
     
     <h2 class="archive__item-title" itemprop="headline">
       
-        <a href="/2016/03/01/distrubuted_sql_query_using_sparksql_hdfs_sqoop.html" rel="permalink">Distributed SQL Query using SparkSQL, HDFS and Sqoop
+        <a href="/test/2020/04/21/test.html" rel="permalink">Articolo creato da issue sul branch test
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">test
+piccola modifica
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/test/2016/03/01/distrubuted_sql_query_using_sparksql_hdfs_sqoop.html" rel="permalink">Distributed SQL Query using SparkSQL, HDFS and Sqoop
 </a>
       
     </h2>
@@ -465,7 +487,7 @@ The automation described in this post has been used to create this post itself, 
     
     <h2 class="archive__item-title" itemprop="headline">
       
-        <a href="/2016/02/16/apache_spark_distributed_computation_of_pi_in_8_lines_of_python_code.html" rel="permalink">Apache Spark – Distributed computation of π in 8 lines of Python code
+        <a href="/test/2016/02/16/apache_spark_distributed_computation_of_pi_in_8_lines_of_python_code.html" rel="permalink">Apache Spark – Distributed computation of π in 8 lines of Python code
 </a>
       
     </h2>
@@ -485,31 +507,12 @@ The automation described in this post has been used to create this post itself, 
     
     <h2 class="archive__item-title" itemprop="headline">
       
-        <a href="/2016/01/06/import_mysql_data_in_elasticsearch_server.html" rel="permalink">Import Mysql data in Elasticsearch server
+        <a href="/test/2016/01/06/import_mysql_data_in_elasticsearch_server.html" rel="permalink">Import Mysql data in Elasticsearch server
 </a>
       
     </h2>
     
     <p class="archive__item-excerpt" itemprop="description">Elasticsearch is a near real-time search server based on Lucene. It allows to create a distributed full-text search engine. It’s an opensource software devel...</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/2015/07/06/flume_import_apache_logs_in_hadoop_hdfs.html" rel="permalink">Flume: Import apache logs in hadoop hdfs
-</a>
-      
-    </h2>
-    
-    <p class="archive__item-excerpt" itemprop="description">Flume is a project of the Apache Software Foundation used to import stream of data to a centralized data store. In hadoop environments Flume is used to impor...</p>
   </article>
 </div>
 
@@ -535,7 +538,7 @@ The automation described in this post has been used to create this post itself, 
 
     
 
-    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    <li><a href="/test/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
   </ul>
 </div>
 
@@ -545,7 +548,7 @@ The automation described in this post has been used to create this post itself, 
     </div>
 
     
-  <script src="/assets/js/main.min.js"></script>
+  <script src="/test/assets/js/main.min.js"></script>
   <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
 
 
