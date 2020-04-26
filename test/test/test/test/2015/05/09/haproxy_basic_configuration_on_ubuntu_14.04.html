@@ -1,0 +1,600 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.19.1 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>HAProxy basic configuration on Ubuntu 14.04 - SYSADMIN CONTINUOUS IMPROVEMENT</title>
+<meta name="description" content="HAProxy is a free, very fast and reliable solution offering high availability, load balancing, and proxying for TCP and HTTP-based applications. It is particularly suited for very high traffic web sites. Over the years it has become the de-facto standard opensource software load balancer, is now shipped with most mainstream Linux distributions, and is often deployed by default in cloud platforms. ">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="SYSADMIN CONTINUOUS IMPROVEMENT">
+<meta property="og:title" content="HAProxy basic configuration on Ubuntu 14.04">
+<meta property="og:url" content="/test/2015/05/09/haproxy_basic_configuration_on_ubuntu_14.04.html">
+
+
+  <meta property="og:description" content="HAProxy is a free, very fast and reliable solution offering high availability, load balancing, and proxying for TCP and HTTP-based applications. It is particularly suited for very high traffic web sites. Over the years it has become the de-facto standard opensource software load balancer, is now shipped with most mainstream Linux distributions, and is often deployed by default in cloud platforms. ">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2015-05-09T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="/test/2015/05/09/haproxy_basic_configuration_on_ubuntu_14.04.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "/test/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/test/feed.xml" type="application/atom+xml" rel="alternate" title="SYSADMIN CONTINUOUS IMPROVEMENT Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/test/assets/css/main.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/test/"><img src="/test/assets/logo_sysadminci.png" alt=""></a>
+        
+        <a class="site-title" href="/test/">
+          SYSADMIN CONTINUOUS IMPROVEMENT
+          <span class="site-subtitle">Useful tips and tools for system administrators</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/test/about/">About me</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle Menu</label>
+  <ul class="nav__items">
+    
+      <li>
+        
+          <span class="nav__sub-title">TAGS</span>
+        
+
+        
+        <ul>
+          
+            <li><a href="/test/tag/apache">apache</a></li>
+          
+            <li><a href="/test/tag/automation">automation</a></li>
+          
+            <li><a href="/test/tag/cluster">cluster</a></li>
+          
+            <li><a href="/test/tag/flume">flume</a></li>
+          
+            <li><a href="/test/tag/git">git</a></li>
+          
+            <li><a href="/test/tag/github">github</a></li>
+          
+            <li><a href="/test/tag/hadoop">hadoop</a></li>
+          
+            <li><a href="/test/tag/haproxy">haproxy</a></li>
+          
+            <li><a href="/test/tag/jekyll">jekyll</a></li>
+          
+            <li><a href="/test/tag/linux">linux</a></li>
+          
+            <li><a href="/test/tag/python">python</a></li>
+          
+            <li><a href="/test/tag/spark">spark</a></li>
+          
+        </ul>
+        
+      </li>
+    
+  </ul>
+</nav>
+
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="HAProxy basic configuration on Ubuntu 14.04">
+    <meta itemprop="description" content="HAProxy is a free, very fast and reliable solution offering high availability, load balancing, and proxying for TCP and HTTP-based applications. It is particularly suited for very high traffic web sites. Over the years it has become the de-facto standard opensource software load balancer, is now shipped with most mainstream Linux distributions, and is often deployed by default in cloud platforms.">
+    <meta itemprop="datePublished" content="2015-05-09T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">HAProxy basic configuration on Ubuntu 14.04
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>HAProxy is a free, very fast and reliable solution offering high availability, load balancing, and proxying for TCP and HTTP-based applications. It is particularly suited for very high traffic web sites. Over the years it has become the de-facto standard opensource software load balancer, is now shipped with most mainstream Linux distributions, and is often deployed by default in cloud platforms.</p>
+
+<p>This post describes the steps used to install and deploy a basic configuration of HAProxy on Ubuntu 14.04.</p>
+
+<p>The architecture is composed by three ubuntu virtual machine:</p>
+
+<ol>
+  <li><strong>Hostname:</strong> node1    <strong>IP Address:</strong> 172.17.0.101<br />
+<strong>Description:</strong> Server used to install and to run haproxy</li>
+  <li><strong>Hostname:</strong> node2    <strong>IP Address:</strong> 172.17.0.102 <br />
+<strong>Description:</strong> Server running already apache on port 80</li>
+  <li><strong>Hostname:</strong> node3    <strong>IP Address:</strong> 172.17.0.103<br />
+<strong>Description:</strong> Server running already apache on port 80</li>
+</ol>
+
+<p><img src="/assets/2015-05-09-haproxy_basic_configuration_on_ubuntu_14.04_img1.jpg" alt="haproxy architecture diagram" class="center-image" /></p>
+
+<p>The haproxy software on server node1 will be used to balance the apache service installed on node1 and node2.</p>
+
+<ol>
+  <li><strong>Install haproxy software</strong></li>
+</ol>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">root@node1:~# apt-get <span class="nb">install </span>haproxy
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+Suggested packages:
+vim-haproxy
+The following NEW packages will be installed:
+haproxy
+0 upgraded, 1 newly installed, 0 to remove and 74 not upgraded.
+Need to get 453 kB of archives.
+After this operation, 822 kB of additional disk space will be used.
+Get:1 http://it.archive.ubuntu.com/ubuntu/ trusty/main haproxy amd64 1.4.24-2 <span class="o">[</span>453 kB]
+Fetched 453 kB <span class="k">in </span>0s <span class="o">(</span>568 kB/s<span class="o">)</span>
+Selecting previously unselected package haproxy.
+<span class="o">(</span>Reading database ... 68156 files and directories currently installed.<span class="o">)</span>
+Preparing to unpack .../haproxy_1.4.24-2_amd64.deb ...
+Unpacking haproxy <span class="o">(</span>1.4.24-2<span class="o">)</span> ...
+Processing triggers <span class="k">for </span>ureadahead <span class="o">(</span>0.100.0-16<span class="o">)</span> ...
+ureadahead will be reprofiled on next reboot
+Processing triggers <span class="k">for </span>man-db <span class="o">(</span>2.6.7.1-1ubuntu1<span class="o">)</span> ...
+Setting up haproxy <span class="o">(</span>1.4.24-2<span class="o">)</span> ...
+Processing triggers <span class="k">for </span>ureadahead <span class="o">(</span>0.100.0-16<span class="o">)</span> ...</code></pre></figure>
+
+<ol>
+  <li><strong>Enable haproxy init.d script</strong></li>
+</ol>
+
+<p>For default haproxy has been disabled. Enable HAProxy editing /etc/default/haproxy and setting ENABLED variable to 1</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">root@node1:~#  <span class="nb">sed</span> <span class="nt">-i</span> <span class="s2">"s/ENABLED=0/ENABLED=1/g"</span> /etc/default/haproxy</code></pre></figure>
+
+<ol>
+  <li><strong>Add the first frontend and backend in haproxy configuration</strong></li>
+</ol>
+
+<p>Edit the haproxy configuration file ( /etc/haproxy/haproxy.cfg ) and add the first frontend and backend sections.</p>
+
+<p>These two sections showed below allow to balance each request coming to 172.17.0.101 port 80 to the ports 80 of the two web servers node2 and node3 (ip addresses 172.17.0.101 172.17.0.102).</p>
+
+<p>The option “check” in the last two lines is used to verify using a tcp connection that each web server is available. If one of backend server is offline or doesn’t respond to tcp connection on port 80, haproxy redirects all the requests on the other webserver.</p>
+
+<p>The balancing method used by default in haproxy is round robin.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">root@node1:~# <span class="nb">cat</span> /etc/haproxy/haproxy.cfg
+global
+log /dev/log local0
+log /dev/log local1 notice
+<span class="nb">chroot</span> /var/lib/haproxy
+user haproxy
+group haproxy
+daemon
+
+defaults
+log global
+mode http
+option httplog
+option dontlognull
+contimeout 5000
+clitimeout 50000
+srvtimeout 50000
+errorfile 400 /etc/haproxy/errors/400.http
+errorfile 403 /etc/haproxy/errors/403.http
+errorfile 408 /etc/haproxy/errors/408.http
+errorfile 500 /etc/haproxy/errors/500.http
+errorfile 502 /etc/haproxy/errors/502.http
+errorfile 503 /etc/haproxy/errors/503.http
+errorfile 504 /etc/haproxy/errors/504.http
+
+frontend http-frontend
+<span class="nb">bind </span>172.17.0.101:80
+<span class="c"># Add "X-Forwarded-For" header with the original client's IP address</span>
+reqadd X-Forwarded-Proto:<span class="se">\ </span>http
+default_backend http-backend
+
+backend http-backend
+server node2 172.17.0.102:80 check
+server node3 172.17.0.103:80 check</code></pre></figure>
+
+<ol>
+  <li><strong>Start haproxy and enable starting on boot</strong></li>
+</ol>
+
+<p>Start haproxy service</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">root@node1:~# /etc/init.d/haproxy start
+<span class="k">*</span> Starting haproxy haproxy</code></pre></figure>
+
+<p>Enable haproxy start on boot</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">root@node1:~# update-rc.d haproxy defaults
+Adding system startup <span class="k">for</span> /etc/init.d/haproxy ...
+/etc/rc0.d/K20haproxy -&amp;gt<span class="p">;</span> ../init.d/haproxy
+/etc/rc1.d/K20haproxy -&amp;gt<span class="p">;</span> ../init.d/haproxy
+/etc/rc6.d/K20haproxy -&amp;gt<span class="p">;</span> ../init.d/haproxy
+/etc/rc2.d/S20haproxy -&amp;gt<span class="p">;</span> ../init.d/haproxy
+/etc/rc3.d/S20haproxy -&amp;gt<span class="p">;</span> ../init.d/haproxy
+/etc/rc4.d/S20haproxy -&amp;gt<span class="p">;</span> ../init.d/haproxy
+/etc/rc5.d/S20haproxy -&amp;gt<span class="p">;</span> ../init.d/haproxy</code></pre></figure>
+
+<ol>
+  <li><strong>Log haproxy location</strong></li>
+</ol>
+
+<p>The default location of haproxy.log is /var/log/haproxy.log</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">root@node1:~# <span class="nb">cat</span> /var/log/haproxy.log
+May 4 21:04:33 node1 haproxy[2270]: Proxy http-frontend started.
+May 4 21:04:33 node1 haproxy[2270]: Proxy http-frontend started.
+May 4 21:04:33 node1 haproxy[2270]: Proxy http-backend started.</code></pre></figure>
+
+<ol>
+  <li><strong>Test haproxy configuration</strong></li>
+</ol>
+
+<p>You can use curl or access to the url <a href="http://172.17.0.101/">http://172.17.0.101/</a> using a browser</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">root@node1:~# curl http://172.17.0.101/</code></pre></figure>
+
+<ol>
+  <li><strong>Enable HAproxy stats</strong>
+HAproxy provides a simple web interface useful to show the status and statistics about the frontend/backend configured in haproxy and their connections.</li>
+</ol>
+
+<p>To enable it add the following content in /etc/haproxy/haproxy.cfg and reload the service :</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">listen stats 172.17.0.101:1936
+
+mode http
+log global
+
+maxconn 10
+
+clitimeout 100s
+srvtimeout 100s
+contimeout 100s
+<span class="nb">timeout </span>queue 100s
+
+stats <span class="nb">enable
+</span>stats hide-version
+stats refresh 30s
+stats show-node
+stats auth admin:password <span class="c"># Change username and password for statistics webpage authentication</span>
+stats uri /haproxy?stats
+Reload haproxy configuration
+
+root@node1:~# /etc/init.d/haproxy reload</code></pre></figure>
+
+<p>View haproxy statistics using the url <a href="http://172.17.0.101:1936/haproxy?stats">http://172.17.0.101:1936/haproxy?stats</a></p>
+
+<ol>
+  <li><strong>Configure other frontend/backend with different balancing algorithms</strong></li>
+</ol>
+
+<p>An instance of haproxy can be configured to balance multiple services configuring multiple frontend and backend sections in its configuration file.</p>
+
+<p>HAproxy allows also to define different balancing algorithms, it use round robin as default but it support other algorithms that can be selected using the option balance in backend section:</p>
+
+<ul>
+  <li><strong>source:</strong> This method selects which server to use based on a hash of the source IP i.e. your user’s IP address. This is one method to ensure that a user will connect to the same server</li>
+  <li><strong>leastconn:</strong> This method selects the server with the least number of connections. It’s recommended for longer sessions. Servers in the same backend are also rotated in a round-robin fashion.</li>
+</ul>
+
+<p>The following configuration can be added to haproxy configuration file in order to add two other balanced service listening respectively on port 81 and 82 using leastconn and source balancing method:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">frontend http-frontend1
+
+<span class="nb">bind </span>172.17.0.101:81
+reqadd X-Forwarded-Proto:<span class="se">\ </span>http
+default_backend http-backend1
+
+backend http-backend1
+balance leastconn
+server node2 172.17.0.102:80 check
+server node3 172.17.0.103:80 check
+
+frontend http-frontend2
+<span class="nb">bind </span>172.17.0.101:82
+reqadd X-Forwarded-Proto:<span class="se">\ </span>http
+default_backend http-backend2
+
+backend http-backend2
+balance <span class="nb">source
+</span>server node2 172.17.0.102:80 check
+server node3 172.17.0.103:80 check</code></pre></figure>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2015-05-09T00:00:00+00:00">May 9, 2015</time></p>
+        
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/test/2015/04/05/python-unit-testing-introduction.html" class="pagination--pager" title="Python unit testing introduction
+">Previous</a>
+    
+    
+      <a href="/test/2015/05/09/install_and_configure_gpfs_4.1_filesystem_on_linux_centos_6.6.html" class="pagination--pager" title="Install and configure GPFS 4.1 filesystem on Linux Centos 6.6
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/test/2020/04/21/test.html" rel="permalink">Articolo creato da issue sul branch test
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">test
+piccola modifica
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/test/2020/04/05/use_github_actions_to_create_jekyll_post_from_github_issue.html" rel="permalink">MODIFICA EFFETTUATA NEL BRANCH TEST
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">This post describe a GitHub Actions workflow that allow to create new post on a Jekyll web site contained in a GitHub repository using the issue editor of Gi...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/test/2016/03/01/distrubuted_sql_query_using_sparksql_hdfs_sqoop.html" rel="permalink">Distributed SQL Query using SparkSQL, HDFS and Sqoop
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Spark SQL: A brief introduction
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/test/2016/02/16/apache_spark_distributed_computation_of_pi_in_8_lines_of_python_code.html" rel="permalink">Apache Spark – Distributed computation of π in 8 lines of Python code
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">In this post I show how to write a distributed application computing an approximation of pi number though a Spark application using Python.
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/test/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2020 SYSADMIN CONTINUOUS IMPROVEMENT. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/test/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
