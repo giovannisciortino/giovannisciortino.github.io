@@ -12,7 +12,7 @@ jobs:
       - uses: actions/cache@v1
         id: cache
         with:
-          path: vendor/bundle
+          path: /home/runner/work/vendor/bundle
           key: vendor_bundle_${{ runner.os }}-build-${{ env.cache-name }}-build_and_publish_to_other_branch
           restore-keys: |
             vendor_bundle_${{ runner.os }}-build-${{ env.cache-name }}-build_and_publish_to_other_branch
@@ -55,7 +55,7 @@ jobs:
           export GEM_HOME="$HOME/gems"
           export PATH="$HOME/gems/bin:$PATH"
           cd test/
-          bundle config path vendor/bundle
+          bundle config path /home/runner/work/vendor/bundle
           bundle config --global --jobs 2
           bundle install
       - name: Build jekyll website
