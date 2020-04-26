@@ -8,21 +8,20 @@ jobs:
     name: A job to create a build jekyll site and push it to other branch of same repository
     runs-on: ubuntu-latest
     steps:
+      
+      - uses: actions/cache@v1
+        id: cache
+        with:
+          path: vendor/bundle
+          key: vendor_bundle_${{ runner.os }}-build-${{ env.cache-name }}-build_and_publish_to_other_branch
+          restore-keys: |
+            vendor_bundle_${{ runner.os }}-build-${{ env.cache-name }}-build_and_publish_to_other_branch
+ 
       - name: Checkout test branch
         uses: actions/checkout@master
         with:
           path: test
           ref: test
-
-      - name: Create jekyll build destination directory
-        run: mkdir -vp www 
-
-      - name: Jekyll Build
-        uses: gha-utilities/jekyll-build@v0.0.3
-        with:
-          jekyll_github_token: ${{ secrets.GITHUB_TOKEN }}
-          source: test
-          destination: www
 
       - name: Checkout master branch
         uses: actions/checkout@master
@@ -33,9 +32,41 @@ jobs:
       - name: Create destination directory if not exist
         run: mkdir -p master/test
 
-      - name: Copy built site to destination directory
-        run: cp -ar test/www/* master/test
+      - name: Change baseurl for test website
+        run: sed -ri 's+^(baseurl.*) ""+\1 "/test"+g' test/_config.yml
 
+#      - name: Jekyll Build
+#        uses: gha-utilities/jekyll-build@v0.0.3
+#        with:
+#          jekyll_github_token: ${{ secrets.GITHUB_TOKEN }}
+#          source: test
+#          destination: master/test
+
+      - name: Install bundler
+        run: |
+          #sudo apt-get install ruby-full build-essential zlib1g-dev
+          export GEM_HOME="$HOME/gems"
+          export PATH="$HOME/gems/bin:$PATH"
+          gem install bundler #jekyll
+      - name: Install jekyll and dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          #sudo apt-get install ruby-full build-essential zlib1g-dev
+          export GEM_HOME="$HOME/gems"
+          export PATH="$HOME/gems/bin:$PATH"
+          cd test/
+          bundle config path vendor/bundle
+          bundle config --global --jobs 2
+          bundle install
+      - name: Build jekyll website
+        run: |
+          export GEM_HOME="$HOME/gems"
+          export PATH="$HOME/gems/bin:$PATH"
+          cd test/
+          bundle exec jekyll build
+          cd ..
+          rm -rf master/test/*
+          cp -r test/_site/* master/test/
       - name: Commit files
         working-directory: master
         run: |
