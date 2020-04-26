@@ -70,4 +70,10 @@ var store = [{
         "tags": ["github actions","jekyll"],
         "url": "/test/2020/04/05/use_github_actions_to_create_jekyll_post_from_github_issue.html",
         "teaser": null
+      },{
+        "title": "Articolo creato da issue sul branch test il 26 aprile",
+        "excerpt":"test  ","categories": [],
+        "tags": ["tag1","tag2"],
+        "url": "/test/2020/04/21/test.html",
+        "teaser": null
       }]
