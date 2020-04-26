@@ -76,4 +76,10 @@ var store = [{
         "tags": ["tag1","tag2"],
         "url": "/test/2020/04/21/test.html",
         "teaser": null
+      },{
+        "title": "Articolo creato da issue sul branch test il 26 aprile",
+        "excerpt":"test  ","categories": [],
+        "tags": ["tag1","tag2"],
+        "url": "/test/2020/04/26/test.html",
+        "teaser": null
       }]
