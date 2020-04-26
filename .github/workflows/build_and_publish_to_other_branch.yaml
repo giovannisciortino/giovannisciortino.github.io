@@ -63,6 +63,7 @@ jobs:
           export GEM_HOME="$HOME/gems"
           export PATH="$HOME/gems/bin:$PATH"
           cd test/
+          bundle config path /home/runner/work/vendor/bundle
           bundle exec jekyll build
           cd ..
           rm -rf master/test/*
