@@ -10,7 +10,7 @@
     <meta charset="utf-8">
 
 <!-- begin _includes/seo.html --><title>Use GitHub Actions to create Jekyll post from GitHub issue - SYSADMIN CONTINUOUS IMPROVEMENT</title>
-<meta name="description" content="This post describe a GitHub Actions workflow that allow to create new post on a Jekyll web site contained in a GitHub repository using the issue editor of GitHub website.  GitHub Actions [1] makes it easy to automate all your software workflows, it build, test, and deploy your code right from GitHub.  Jekyll [2] is a simple, blog-aware, static site generator perfect for personal, project, or organization sites.  The article [3], describing the disadvantages of static site generator software compared to CMS software, includes among them the following “Publishing the site requires tools and code on your computer”.  The GitHub Actions workflow described in this post allows to mitigate this problem. This workflow allows to use the web interface of GitHub to create Jekyll posts exploiting the “MarkDown editor” and “check spelling” features contained in the issue editor of GitHub web site without require any tool installed.  The automation described in this post is contained in three files:     A github issue template [4] containing a template of a new jekyll post file   A github issue configuration file [5] that allow to create also github issue not respecting the template described in 1.   A Github Workflow [6]   The GitHub workflow has been reported also below in order to describe its main components:  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 name: A workflow to create a jekyll post from github issue  on:    issue_comment:      types: [created]  jobs:    build:      name: A job to create a jekyll post from github issue      runs-on: ubuntu-latest      if: github.event.comment.body == &#39;publish&#39;      steps:        - name: Checkout master branch          uses: actions/checkout@master         - name: Create jekyll post file          if: success() &amp;&amp; github.event.issue.user.login == env.GITHUB_ACCOUNT_JEKYLL_OWNER          run: |            cat &lt;&lt; &#39;EOF&#39; &gt; $POST_DIRECTORY/$            $            EOF          env:            GITHUB_ACCOUNT_JEKYLL_OWNER: &#39;giovannisciortino&#39;            POST_DIRECTORY: &#39;_posts&#39;          - name: Commit files          if: success()          run: |            git config --local user.name &quot;$GIT_USER_NAME&quot;            git config --local user.email &quot;$GIT_USER_EMAIL&quot;            git add --all            # commit only if there are changes            if [[ `git status --porcelain` ]]; then              git commit -m &quot;$DEFAULT_COMMIT_MESSAGE&quot; -a            fi          env:            GIT_USER_NAME: &#39;Giovanni Sciortino&#39;            GIT_USER_EMAIL: &#39;giovannibattistasciortino@gmail.com&#39;            DEFAULT_COMMIT_MESSAGE: &#39;New jekyll post create from github issue&#39;          - name: Push changes          if: success()          uses: ad-m/github-push-action@master          with:            github_token: $   This GitHub workflow contains the following main elements:    it contains the trigger executing it (line 3-4). It’s triggered when a new comment is added to a github issue   it execute the four steps of the job contained in the workflow when someone write the comment “publish” in the GitHub issue (line 9)   The first step clone the repository containing the Jekyll git repository in a ubuntu docker container (line 11-12)   The second step verify that the author of the command publish is the owner of the GitHub repository and create the Jekyll post reading the content from the title and the first message of the github issue (line 14-22)   The third step create a new commit using the file modified in the second step (line 24-37)   The forth sep push the new commit to GitHub (line 39-43)   These three files allow to implement the workflow described in this post. The automation described in this post has been used to create this post itself, [7] is the GitHub issue used to create this post.  [1] https://github.com/features/actions  [2] https://jekyllrb.com/  [3] https://www.strattic.com/jekyll-hugo-wordpress-pros-cons-static-site-generators/  [4] https://github.com/giovannisciortino/giovannisciortino.github.io/blob/master/.github/ISSUE_TEMPLATE/jekill_post_new_template.md  [5] https://github.com/giovannisciortino/giovannisciortino.github.io/blob/master/.github/ISSUE_TEMPLATE/config.yml  [6] https://github.com/giovannisciortino/giovannisciortino.github.io/blob/master/.github/workflows/create_jekyll_post_from_issue.yamlhttps://raw.githubusercontent.com/giovannisciortino/giovannisciortino.github.io/master/.github/workflows/create_jekyll_post_from_issue.yaml ">
+<meta name="description" content="This post describe a GitHub Actions workflow that allow to create new post on a Jekyll web site contained in a GitHub repository using the issue editor of GitHub website. ">
 
 
 
@@ -21,7 +21,7 @@
 <meta property="og:url" content="/test/2020/04/05/use_github_actions_to_create_jekyll_post_from_github_issue.html">
 
 
-  <meta property="og:description" content="This post describe a GitHub Actions workflow that allow to create new post on a Jekyll web site contained in a GitHub repository using the issue editor of GitHub website.  GitHub Actions [1] makes it easy to automate all your software workflows, it build, test, and deploy your code right from GitHub.  Jekyll [2] is a simple, blog-aware, static site generator perfect for personal, project, or organization sites.  The article [3], describing the disadvantages of static site generator software compared to CMS software, includes among them the following “Publishing the site requires tools and code on your computer”.  The GitHub Actions workflow described in this post allows to mitigate this problem. This workflow allows to use the web interface of GitHub to create Jekyll posts exploiting the “MarkDown editor” and “check spelling” features contained in the issue editor of GitHub web site without require any tool installed.  The automation described in this post is contained in three files:     A github issue template [4] containing a template of a new jekyll post file   A github issue configuration file [5] that allow to create also github issue not respecting the template described in 1.   A Github Workflow [6]   The GitHub workflow has been reported also below in order to describe its main components:  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 name: A workflow to create a jekyll post from github issue  on:    issue_comment:      types: [created]  jobs:    build:      name: A job to create a jekyll post from github issue      runs-on: ubuntu-latest      if: github.event.comment.body == &#39;publish&#39;      steps:        - name: Checkout master branch          uses: actions/checkout@master         - name: Create jekyll post file          if: success() &amp;&amp; github.event.issue.user.login == env.GITHUB_ACCOUNT_JEKYLL_OWNER          run: |            cat &lt;&lt; &#39;EOF&#39; &gt; $POST_DIRECTORY/$            $            EOF          env:            GITHUB_ACCOUNT_JEKYLL_OWNER: &#39;giovannisciortino&#39;            POST_DIRECTORY: &#39;_posts&#39;          - name: Commit files          if: success()          run: |            git config --local user.name &quot;$GIT_USER_NAME&quot;            git config --local user.email &quot;$GIT_USER_EMAIL&quot;            git add --all            # commit only if there are changes            if [[ `git status --porcelain` ]]; then              git commit -m &quot;$DEFAULT_COMMIT_MESSAGE&quot; -a            fi          env:            GIT_USER_NAME: &#39;Giovanni Sciortino&#39;            GIT_USER_EMAIL: &#39;giovannibattistasciortino@gmail.com&#39;            DEFAULT_COMMIT_MESSAGE: &#39;New jekyll post create from github issue&#39;          - name: Push changes          if: success()          uses: ad-m/github-push-action@master          with:            github_token: $   This GitHub workflow contains the following main elements:    it contains the trigger executing it (line 3-4). It’s triggered when a new comment is added to a github issue   it execute the four steps of the job contained in the workflow when someone write the comment “publish” in the GitHub issue (line 9)   The first step clone the repository containing the Jekyll git repository in a ubuntu docker container (line 11-12)   The second step verify that the author of the command publish is the owner of the GitHub repository and create the Jekyll post reading the content from the title and the first message of the github issue (line 14-22)   The third step create a new commit using the file modified in the second step (line 24-37)   The forth sep push the new commit to GitHub (line 39-43)   These three files allow to implement the workflow described in this post. The automation described in this post has been used to create this post itself, [7] is the GitHub issue used to create this post.  [1] https://github.com/features/actions  [2] https://jekyllrb.com/  [3] https://www.strattic.com/jekyll-hugo-wordpress-pros-cons-static-site-generators/  [4] https://github.com/giovannisciortino/giovannisciortino.github.io/blob/master/.github/ISSUE_TEMPLATE/jekill_post_new_template.md  [5] https://github.com/giovannisciortino/giovannisciortino.github.io/blob/master/.github/ISSUE_TEMPLATE/config.yml  [6] https://github.com/giovannisciortino/giovannisciortino.github.io/blob/master/.github/workflows/create_jekyll_post_from_issue.yamlhttps://raw.githubusercontent.com/giovannisciortino/giovannisciortino.github.io/master/.github/workflows/create_jekyll_post_from_issue.yaml ">
+  <meta property="og:description" content="This post describe a GitHub Actions workflow that allow to create new post on a Jekyll web site contained in a GitHub repository using the issue editor of GitHub website. ">
 
 
 
@@ -211,7 +211,7 @@
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Use GitHub Actions to create Jekyll post from GitHub issue">
-    <meta itemprop="description" content="This post describe a GitHub Actions workflow that allow to create new post on a Jekyll web site contained in a GitHub repository using the issue editor of GitHub website.GitHub Actions [1] makes it easy to automate all your software workflows, it build, test, and deploy your code right from GitHub. Jekyll [2] is a simple, blog-aware, static site generator perfect for personal, project, or organization sites.The article [3], describing the disadvantages of static site generator software compared to CMS software, includes among them the following “Publishing the site requires tools and code on your computer”. The GitHub Actions workflow described in this post allows to mitigate this problem. This workflow allows to use the web interface of GitHub to create Jekyll posts exploiting the “MarkDown editor” and “check spelling” features contained in the issue editor of GitHub web site without require any tool installed.The automation described in this post is contained in three files:  A github issue template [4] containing a template of a new jekyll post file  A github issue configuration file [5] that allow to create also github issue not respecting the template described in 1.  A Github Workflow [6]The GitHub workflow has been reported also below in order to describe its main components:12345678910111213141516171819202122232425262728293031323334353637383940414243name: A workflow to create a jekyll post from github issueon:  issue_comment:    types: [created]jobs:  build:    name: A job to create a jekyll post from github issue    runs-on: ubuntu-latest    if: github.event.comment.body == &#39;publish&#39;    steps:      - name: Checkout master branch        uses: actions/checkout@master      - name: Create jekyll post file        if: success() &amp;&amp; github.event.issue.user.login == env.GITHUB_ACCOUNT_JEKYLL_OWNER        run: |          cat &lt;&lt; &#39;EOF&#39; &gt; $POST_DIRECTORY/$          $          EOF        env:          GITHUB_ACCOUNT_JEKYLL_OWNER: &#39;giovannisciortino&#39;          POST_DIRECTORY: &#39;_posts&#39;      - name: Commit files        if: success()        run: |          git config --local user.name &quot;$GIT_USER_NAME&quot;          git config --local user.email &quot;$GIT_USER_EMAIL&quot;          git add --all          # commit only if there are changes          if [[ `git status --porcelain` ]]; then            git commit -m &quot;$DEFAULT_COMMIT_MESSAGE&quot; -a          fi        env:          GIT_USER_NAME: &#39;Giovanni Sciortino&#39;          GIT_USER_EMAIL: &#39;giovannibattistasciortino@gmail.com&#39;          DEFAULT_COMMIT_MESSAGE: &#39;New jekyll post create from github issue&#39;      - name: Push changes        if: success()        uses: ad-m/github-push-action@master        with:          github_token: $This GitHub workflow contains the following main elements:  it contains the trigger executing it (line 3-4). It’s triggered when a new comment is added to a github issue  it execute the four steps of the job contained in the workflow when someone write the comment “publish” in the GitHub issue (line 9)  The first step clone the repository containing the Jekyll git repository in a ubuntu docker container (line 11-12)  The second step verify that the author of the command publish is the owner of the GitHub repository and create the Jekyll post reading the content from the title and the first message of the github issue (line 14-22)  The third step create a new commit using the file modified in the second step (line 24-37)  The forth sep push the new commit to GitHub (line 39-43)These three files allow to implement the workflow described in this post.The automation described in this post has been used to create this post itself, [7] is the GitHub issue used to create this post.[1] https://github.com/features/actions[2] https://jekyllrb.com/[3] https://www.strattic.com/jekyll-hugo-wordpress-pros-cons-static-site-generators/[4] https://github.com/giovannisciortino/giovannisciortino.github.io/blob/master/.github/ISSUE_TEMPLATE/jekill_post_new_template.md[5] https://github.com/giovannisciortino/giovannisciortino.github.io/blob/master/.github/ISSUE_TEMPLATE/config.yml[6] https://github.com/giovannisciortino/giovannisciortino.github.io/blob/master/.github/workflows/create_jekyll_post_from_issue.yamlhttps://raw.githubusercontent.com/giovannisciortino/giovannisciortino.github.io/master/.github/workflows/create_jekyll_post_from_issue.yaml">
+    <meta itemprop="description" content="This post describe a GitHub Actions workflow that allow to create new post on a Jekyll web site contained in a GitHub repository using the issue editor of GitHub website.">
     <meta itemprop="datePublished" content="2020-04-05T00:00:00+00:00">
     
 
@@ -287,89 +287,48 @@ The GitHub Actions workflow described in this post allows to mitigate this probl
 41
 42
 43
-</pre></td><td class="code"><pre><span class="na">name</span><span class="pi">:</span> <span class="s">A workflow to create a jekyll post from github issue</span><span class="err">
-</span>
-<span class="na">on</span><span class="pi">:</span><span class="err">
-</span>
-  <span class="na">issue_comment</span><span class="pi">:</span><span class="err">
-</span>
-    <span class="na">types</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">created</span><span class="pi">]</span><span class="err">
-</span>
-<span class="na">jobs</span><span class="pi">:</span><span class="err">
-</span>
-  <span class="na">build</span><span class="pi">:</span><span class="err">
-</span>
-    <span class="na">name</span><span class="pi">:</span> <span class="s">A job to create a jekyll post from github issue</span><span class="err">
-</span>
-    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span><span class="err">
-</span>
-    <span class="na">if</span><span class="pi">:</span> <span class="s">github.event.comment.body == 'publish'</span><span class="err">
-</span>
-    <span class="na">steps</span><span class="pi">:</span><span class="err">
-</span>
-      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Checkout master branch</span><span class="err">
-</span>
-        <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@master</span><span class="err">
-</span>
+</pre></td><td class="code"><pre><span class="na">name</span><span class="pi">:</span> <span class="s">A workflow to create a jekyll post from github issue</span>
+<span class="na">on</span><span class="pi">:</span>
+  <span class="na">issue_comment</span><span class="pi">:</span>
+    <span class="na">types</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">created</span><span class="pi">]</span>
+<span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">build</span><span class="pi">:</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">A job to create a jekyll post from github issue</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
+    <span class="na">if</span><span class="pi">:</span> <span class="s">github.event.comment.body == 'publish'</span>
+    <span class="na">steps</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Checkout master branch</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@master</span>
 
-      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Create jekyll post file</span><span class="err">
-</span>
-        <span class="na">if</span><span class="pi">:</span> <span class="s">success() &amp;&amp; github.event.issue.user.login == env.GITHUB_ACCOUNT_JEKYLL_OWNER</span><span class="err">
-</span>
-        <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span><span class="err">
-</span>
-          <span class="s">cat &lt;&lt; 'EOF' &gt; $POST_DIRECTORY/$</span><span class="err">
-</span>
-          <span class="s">$</span><span class="err">
-</span>
-          <span class="s">EOF</span><span class="err">
-</span>
-        <span class="na">env</span><span class="pi">:</span><span class="err">
-</span>
-          <span class="na">GITHUB_ACCOUNT_JEKYLL_OWNER</span><span class="pi">:</span> <span class="s1">'</span><span class="s">giovannisciortino'</span><span class="err">
-</span>
-          <span class="na">POST_DIRECTORY</span><span class="pi">:</span> <span class="s1">'</span><span class="s">_posts'</span><span class="err">
-</span>
-<span class="err">
-</span>
-      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Commit files</span><span class="err">
-</span>
-        <span class="na">if</span><span class="pi">:</span> <span class="s">success()</span><span class="err">
-</span>
-        <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span><span class="err">
-</span>
-          <span class="s">git config --local user.name "$GIT_USER_NAME"</span><span class="err">
-</span>
-          <span class="s">git config --local user.email "$GIT_USER_EMAIL"</span><span class="err">
-</span>
-          <span class="s">git add --all</span><span class="err">
-</span>
-          <span class="s"># commit only if there are changes</span><span class="err">
-</span>
-          <span class="s">if [[ `git status --porcelain` ]]; then</span><span class="err">
-</span>
-            <span class="s">git commit -m "$DEFAULT_COMMIT_MESSAGE" -a</span><span class="err">
-</span>
-          <span class="s">fi</span><span class="err">
-</span>
-        <span class="na">env</span><span class="pi">:</span><span class="err">
-</span>
-          <span class="na">GIT_USER_NAME</span><span class="pi">:</span> <span class="s1">'</span><span class="s">Giovanni</span><span class="nv"> </span><span class="s">Sciortino'</span><span class="err">
-</span>
-          <span class="na">GIT_USER_EMAIL</span><span class="pi">:</span> <span class="s1">'</span><span class="s">giovannibattistasciortino@gmail.com'</span><span class="err">
-</span>
-          <span class="na">DEFAULT_COMMIT_MESSAGE</span><span class="pi">:</span> <span class="s1">'</span><span class="s">New</span><span class="nv"> </span><span class="s">jekyll</span><span class="nv"> </span><span class="s">post</span><span class="nv"> </span><span class="s">create</span><span class="nv"> </span><span class="s">from</span><span class="nv"> </span><span class="s">github</span><span class="nv"> </span><span class="s">issue'</span><span class="err">
-</span>
-<span class="err">
-</span>
-      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Push changes</span><span class="err">
-</span>
-        <span class="na">if</span><span class="pi">:</span> <span class="s">success()</span><span class="err">
-</span>
-        <span class="na">uses</span><span class="pi">:</span> <span class="s">ad-m/github-push-action@master</span><span class="err">
-</span>
-        <span class="na">with</span><span class="pi">:</span><span class="err">
-</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Create jekyll post file</span>
+        <span class="na">if</span><span class="pi">:</span> <span class="s">success() &amp;&amp; github.event.issue.user.login == env.GITHUB_ACCOUNT_JEKYLL_OWNER</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+          <span class="s">cat &lt;&lt; 'EOF' &gt; $POST_DIRECTORY/$</span>
+          <span class="s">$</span>
+          <span class="s">EOF</span>
+        <span class="na">env</span><span class="pi">:</span>
+          <span class="na">GITHUB_ACCOUNT_JEKYLL_OWNER</span><span class="pi">:</span> <span class="s1">'</span><span class="s">giovannisciortino'</span>
+          <span class="na">POST_DIRECTORY</span><span class="pi">:</span> <span class="s1">'</span><span class="s">_posts'</span>
+
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Commit files</span>
+        <span class="na">if</span><span class="pi">:</span> <span class="s">success()</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+          <span class="s">git config --local user.name "$GIT_USER_NAME"</span>
+          <span class="s">git config --local user.email "$GIT_USER_EMAIL"</span>
+          <span class="s">git add --all</span>
+          <span class="s"># commit only if there are changes</span>
+          <span class="s">if [[ `git status --porcelain` ]]; then</span>
+            <span class="s">git commit -m "$DEFAULT_COMMIT_MESSAGE" -a</span>
+          <span class="s">fi</span>
+        <span class="na">env</span><span class="pi">:</span>
+          <span class="na">GIT_USER_NAME</span><span class="pi">:</span> <span class="s1">'</span><span class="s">Giovanni</span><span class="nv"> </span><span class="s">Sciortino'</span>
+          <span class="na">GIT_USER_EMAIL</span><span class="pi">:</span> <span class="s1">'</span><span class="s">giovannibattistasciortino@gmail.com'</span>
+          <span class="na">DEFAULT_COMMIT_MESSAGE</span><span class="pi">:</span> <span class="s1">'</span><span class="s">New</span><span class="nv"> </span><span class="s">jekyll</span><span class="nv"> </span><span class="s">post</span><span class="nv"> </span><span class="s">create</span><span class="nv"> </span><span class="s">from</span><span class="nv"> </span><span class="s">github</span><span class="nv"> </span><span class="s">issue'</span>
+
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Push changes</span>
+        <span class="na">if</span><span class="pi">:</span> <span class="s">success()</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">ad-m/github-push-action@master</span>
+        <span class="na">with</span><span class="pi">:</span>
           <span class="na">github_token</span><span class="pi">:</span> <span class="s">$</span>
 </pre></td></tr></tbody></table></code></pre></figure>
 

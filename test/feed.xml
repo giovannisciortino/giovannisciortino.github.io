@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="/test/feed.xml" rel="self" type="application/atom+xml" /><link href="/test/" rel="alternate" type="text/html" /><updated>2020-04-26T07:53:12+00:00</updated><id>/test/feed.xml</id><title type="html">SYSADMIN CONTINUOUS IMPROVEMENT</title><subtitle>Useful tips and tools for system administrator</subtitle><entry><title type="html">Use GitHub Actions to create Jekyll post from GitHub issue</title><link href="/test/2020/04/05/use_github_actions_to_create_jekyll_post_from_github_issue.html" rel="alternate" type="text/html" title="Use GitHub Actions to create Jekyll post from GitHub issue" /><published>2020-04-05T00:00:00+00:00</published><updated>2020-04-05T00:00:00+00:00</updated><id>/test/2020/04/05/use_github_actions_to_create_jekyll_post_from_github_issue</id><content type="html" xml:base="/test/2020/04/05/use_github_actions_to_create_jekyll_post_from_github_issue.html">&lt;p&gt;This post describe a GitHub Actions workflow that allow to create new post on a Jekyll web site contained in a GitHub repository using the issue editor of GitHub website.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="/test/feed.xml" rel="self" type="application/atom+xml" /><link href="/test/" rel="alternate" type="text/html" /><updated>2020-04-26T07:55:31+00:00</updated><id>/test/feed.xml</id><title type="html">SYSADMIN CONTINUOUS IMPROVEMENT</title><subtitle>Useful tips and tools for system administrator</subtitle><entry><title type="html">Use GitHub Actions to create Jekyll post from GitHub issue</title><link href="/test/2020/04/05/use_github_actions_to_create_jekyll_post_from_github_issue.html" rel="alternate" type="text/html" title="Use GitHub Actions to create Jekyll post from GitHub issue" /><published>2020-04-05T00:00:00+00:00</published><updated>2020-04-05T00:00:00+00:00</updated><id>/test/2020/04/05/use_github_actions_to_create_jekyll_post_from_github_issue</id><content type="html" xml:base="/test/2020/04/05/use_github_actions_to_create_jekyll_post_from_github_issue.html">&lt;p&gt;This post describe a GitHub Actions workflow that allow to create new post on a Jekyll web site contained in a GitHub repository using the issue editor of GitHub website.&lt;/p&gt;
 
 &lt;p&gt;GitHub Actions [1] makes it easy to automate all your software workflows, it build, test, and deploy your code right from GitHub. 
 Jekyll [2] is a simple, blog-aware, static site generator perfect for personal, project, or organization sites.&lt;/p&gt;
@@ -59,89 +59,48 @@ The GitHub Actions workflow described in this post allows to mitigate this probl
 41
 42
 43
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;A workflow to create a jekyll post from github issue&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;issue_comment&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;types&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;created&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;jobs&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;A job to create a jekyll post from github issue&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;runs-on&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ubuntu-latest&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;github.event.comment.body == 'publish'&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;steps&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Checkout master branch&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;uses&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;actions/checkout@master&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;A workflow to create a jekyll post from github issue&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;issue_comment&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;types&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;created&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;jobs&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;A job to create a jekyll post from github issue&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;runs-on&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ubuntu-latest&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;github.event.comment.body == 'publish'&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;steps&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Checkout master branch&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;uses&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;actions/checkout@master&lt;/span&gt;
 
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Create jekyll post file&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;success() &amp;amp;&amp;amp; github.event.issue.user.login == env.GITHUB_ACCOUNT_JEKYLL_OWNER&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-          &lt;span class=&quot;s&quot;&gt;cat &amp;lt;&amp;lt; 'EOF' &amp;gt; $POST_DIRECTORY/$&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-          &lt;span class=&quot;s&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-          &lt;span class=&quot;s&quot;&gt;EOF&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-          &lt;span class=&quot;na&quot;&gt;GITHUB_ACCOUNT_JEKYLL_OWNER&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;giovannisciortino'&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-          &lt;span class=&quot;na&quot;&gt;POST_DIRECTORY&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;_posts'&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Commit files&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;success()&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-          &lt;span class=&quot;s&quot;&gt;git config --local user.name &quot;$GIT_USER_NAME&quot;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-          &lt;span class=&quot;s&quot;&gt;git config --local user.email &quot;$GIT_USER_EMAIL&quot;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-          &lt;span class=&quot;s&quot;&gt;git add --all&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-          &lt;span class=&quot;s&quot;&gt;# commit only if there are changes&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-          &lt;span class=&quot;s&quot;&gt;if [[ `git status --porcelain` ]]; then&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-            &lt;span class=&quot;s&quot;&gt;git commit -m &quot;$DEFAULT_COMMIT_MESSAGE&quot; -a&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-          &lt;span class=&quot;s&quot;&gt;fi&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-          &lt;span class=&quot;na&quot;&gt;GIT_USER_NAME&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Giovanni&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Sciortino'&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-          &lt;span class=&quot;na&quot;&gt;GIT_USER_EMAIL&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;giovannibattistasciortino@gmail.com'&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-          &lt;span class=&quot;na&quot;&gt;DEFAULT_COMMIT_MESSAGE&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;jekyll&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;create&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;from&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;issue'&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Push changes&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;success()&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;uses&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ad-m/github-push-action@master&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;with&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Create jekyll post file&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;success() &amp;amp;&amp;amp; github.event.issue.user.login == env.GITHUB_ACCOUNT_JEKYLL_OWNER&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;|&lt;/span&gt;
+          &lt;span class=&quot;s&quot;&gt;cat &amp;lt;&amp;lt; 'EOF' &amp;gt; $POST_DIRECTORY/$&lt;/span&gt;
+          &lt;span class=&quot;s&quot;&gt;$&lt;/span&gt;
+          &lt;span class=&quot;s&quot;&gt;EOF&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;GITHUB_ACCOUNT_JEKYLL_OWNER&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;giovannisciortino'&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;POST_DIRECTORY&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;_posts'&lt;/span&gt;
+
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Commit files&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;success()&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;|&lt;/span&gt;
+          &lt;span class=&quot;s&quot;&gt;git config --local user.name &quot;$GIT_USER_NAME&quot;&lt;/span&gt;
+          &lt;span class=&quot;s&quot;&gt;git config --local user.email &quot;$GIT_USER_EMAIL&quot;&lt;/span&gt;
+          &lt;span class=&quot;s&quot;&gt;git add --all&lt;/span&gt;
+          &lt;span class=&quot;s&quot;&gt;# commit only if there are changes&lt;/span&gt;
+          &lt;span class=&quot;s&quot;&gt;if [[ `git status --porcelain` ]]; then&lt;/span&gt;
+            &lt;span class=&quot;s&quot;&gt;git commit -m &quot;$DEFAULT_COMMIT_MESSAGE&quot; -a&lt;/span&gt;
+          &lt;span class=&quot;s&quot;&gt;fi&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;GIT_USER_NAME&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Giovanni&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Sciortino'&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;GIT_USER_EMAIL&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;giovannibattistasciortino@gmail.com'&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;DEFAULT_COMMIT_MESSAGE&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;jekyll&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;create&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;from&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;issue'&lt;/span&gt;
+
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Push changes&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;success()&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;uses&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ad-m/github-push-action@master&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;with&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
           &lt;span class=&quot;na&quot;&gt;github_token&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;$&lt;/span&gt;
 &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
@@ -168,7 +127,7 @@ The automation described in this post has been used to create this post itself, 
 
 &lt;p&gt;[5] https://github.com/giovannisciortino/giovannisciortino.github.io/blob/master/.github/ISSUE_TEMPLATE/config.yml&lt;/p&gt;
 
-&lt;p&gt;[6] https://github.com/giovannisciortino/giovannisciortino.github.io/blob/master/.github/workflows/create_jekyll_post_from_issue.yamlhttps://raw.githubusercontent.com/giovannisciortino/giovannisciortino.github.io/master/.github/workflows/create_jekyll_post_from_issue.yaml&lt;/p&gt;</content><author><name></name></author><category term="github actions" /><category term="jekyll" /><summary type="html">This post describe a GitHub Actions workflow that allow to create new post on a Jekyll web site contained in a GitHub repository using the issue editor of GitHub website. GitHub Actions [1] makes it easy to automate all your software workflows, it build, test, and deploy your code right from GitHub. Jekyll [2] is a simple, blog-aware, static site generator perfect for personal, project, or organization sites. The article [3], describing the disadvantages of static site generator software compared to CMS software, includes among them the following “Publishing the site requires tools and code on your computer”. The GitHub Actions workflow described in this post allows to mitigate this problem. This workflow allows to use the web interface of GitHub to create Jekyll posts exploiting the “MarkDown editor” and “check spelling” features contained in the issue editor of GitHub web site without require any tool installed. The automation described in this post is contained in three files: A github issue template [4] containing a template of a new jekyll post file A github issue configuration file [5] that allow to create also github issue not respecting the template described in 1. A Github Workflow [6] The GitHub workflow has been reported also below in order to describe its main components: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 name: A workflow to create a jekyll post from github issue on: issue_comment: types: [created] jobs: build: name: A job to create a jekyll post from github issue runs-on: ubuntu-latest if: github.event.comment.body == 'publish' steps: - name: Checkout master branch uses: actions/checkout@master - name: Create jekyll post file if: success() &amp;amp;&amp;amp; github.event.issue.user.login == env.GITHUB_ACCOUNT_JEKYLL_OWNER run: | cat &amp;lt;&amp;lt; 'EOF' &amp;gt; $POST_DIRECTORY/$ $ EOF env: GITHUB_ACCOUNT_JEKYLL_OWNER: 'giovannisciortino' POST_DIRECTORY: '_posts' - name: Commit files if: success() run: | git config --local user.name &quot;$GIT_USER_NAME&quot; git config --local user.email &quot;$GIT_USER_EMAIL&quot; git add --all # commit only if there are changes if [[ `git status --porcelain` ]]; then git commit -m &quot;$DEFAULT_COMMIT_MESSAGE&quot; -a fi env: GIT_USER_NAME: 'Giovanni Sciortino' GIT_USER_EMAIL: 'giovannibattistasciortino@gmail.com' DEFAULT_COMMIT_MESSAGE: 'New jekyll post create from github issue' - name: Push changes if: success() uses: ad-m/github-push-action@master with: github_token: $ This GitHub workflow contains the following main elements: it contains the trigger executing it (line 3-4). It’s triggered when a new comment is added to a github issue it execute the four steps of the job contained in the workflow when someone write the comment “publish” in the GitHub issue (line 9) The first step clone the repository containing the Jekyll git repository in a ubuntu docker container (line 11-12) The second step verify that the author of the command publish is the owner of the GitHub repository and create the Jekyll post reading the content from the title and the first message of the github issue (line 14-22) The third step create a new commit using the file modified in the second step (line 24-37) The forth sep push the new commit to GitHub (line 39-43) These three files allow to implement the workflow described in this post. The automation described in this post has been used to create this post itself, [7] is the GitHub issue used to create this post. [1] https://github.com/features/actions [2] https://jekyllrb.com/ [3] https://www.strattic.com/jekyll-hugo-wordpress-pros-cons-static-site-generators/ [4] https://github.com/giovannisciortino/giovannisciortino.github.io/blob/master/.github/ISSUE_TEMPLATE/jekill_post_new_template.md [5] https://github.com/giovannisciortino/giovannisciortino.github.io/blob/master/.github/ISSUE_TEMPLATE/config.yml [6] https://github.com/giovannisciortino/giovannisciortino.github.io/blob/master/.github/workflows/create_jekyll_post_from_issue.yamlhttps://raw.githubusercontent.com/giovannisciortino/giovannisciortino.github.io/master/.github/workflows/create_jekyll_post_from_issue.yaml</summary></entry><entry><title type="html">Distributed SQL Query using SparkSQL, HDFS and Sqoop</title><link href="/test/2016/03/01/distrubuted_sql_query_using_sparksql_hdfs_sqoop.html" rel="alternate" type="text/html" title="Distributed SQL Query using SparkSQL, HDFS and Sqoop" /><published>2016-03-01T00:00:00+00:00</published><updated>2016-03-01T00:00:00+00:00</updated><id>/test/2016/03/01/distrubuted_sql_query_using_sparksql_hdfs_sqoop</id><content type="html" xml:base="/test/2016/03/01/distrubuted_sql_query_using_sparksql_hdfs_sqoop.html">&lt;h2 id=&quot;spark-sql-a-brief-introduction&quot;&gt;Spark SQL: A brief introduction&lt;/h2&gt;
+&lt;p&gt;[6] https://github.com/giovannisciortino/giovannisciortino.github.io/blob/master/.github/workflows/create_jekyll_post_from_issue.yamlhttps://raw.githubusercontent.com/giovannisciortino/giovannisciortino.github.io/master/.github/workflows/create_jekyll_post_from_issue.yaml&lt;/p&gt;</content><author><name></name></author><category term="github actions" /><category term="jekyll" /><summary type="html">This post describe a GitHub Actions workflow that allow to create new post on a Jekyll web site contained in a GitHub repository using the issue editor of GitHub website.</summary></entry><entry><title type="html">Distributed SQL Query using SparkSQL, HDFS and Sqoop</title><link href="/test/2016/03/01/distrubuted_sql_query_using_sparksql_hdfs_sqoop.html" rel="alternate" type="text/html" title="Distributed SQL Query using SparkSQL, HDFS and Sqoop" /><published>2016-03-01T00:00:00+00:00</published><updated>2016-03-01T00:00:00+00:00</updated><id>/test/2016/03/01/distrubuted_sql_query_using_sparksql_hdfs_sqoop</id><content type="html" xml:base="/test/2016/03/01/distrubuted_sql_query_using_sparksql_hdfs_sqoop.html">&lt;h2 id=&quot;spark-sql-a-brief-introduction&quot;&gt;Spark SQL: A brief introduction&lt;/h2&gt;
 
 &lt;p&gt;&lt;a href=&quot;http://spark.apache.org/sql/&quot;&gt;Spark SQL&lt;/a&gt; is a component of Spark framework. It allows to manipulate big unstructured data file and extract useful information using SQL.
 It introduces a new data abstraction called DataFrames allowing the analysis of structured and semi-structured data.
