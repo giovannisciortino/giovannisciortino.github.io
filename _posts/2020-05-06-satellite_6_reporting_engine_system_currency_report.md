@@ -1,92 +1,101 @@
 ---
-title:  "Satellite 6 reporting engine - System currency report"
+title:  "Red Hat Satellite 6 reporting engine - System currency report"
 tags: [satellite]
 ---
 
+This post describe how generate the "System currency" report in Red Hat Satellite 6.
+System currency report is a report already existing in Satellite 5, below there its description from Satellite 5 [documentation](https://access.redhat.com/documentation/en-us/red_hat_satellite/5.6/html/getting_started_guide/sect-getting_started_guide-systems_management-managing_systems_with_satellite)
 
+> System Currency report which lists registered systems ordered by score. The score is determined by the totals of the errata relevant to the systems. A specific weighted score per category per errata adds to the total score where the default weight awards critical security errata with the heaviest weight and enhancement errata with the lowest. The report can be used to prioritize maintenance actions on the systems registered to the Satellite.
 
+In Red Hat Satellite 6.5 has been introduced a new feature named ["Reporting engine"](https://www.redhat.com/en/blog/getting-started-satellite-65-reporting-engine), allows to Satellite users to create reports that can be exported in different formats.
 
-This post describe a GitHub Actions workflow that allow to create new post on a Jekyll web site contained in a GitHub repository using the issue editor of GitHub website.
+Below there is an example of the output of the Satellite 6 system currency reports:
 
-GitHub Actions [1] makes it easy to automate all your software workflows, it build, test, and deploy your code right from GitHub.
-Jekyll [2] is a simple, blog-aware, static site generator perfect for personal, project, or organization sites.
+Organization  | Host   | Critical  | Important   | Moderate   | Low   | Bugfix  | Enhancement  | Score  
+--|---|---|---|---|---|---|---|--
+ACME | dhcp-server-01 | 6  | 102  | 103  | 28  | 794  | 144  | 4492
+ACME | dhcp-server-02 | 6  | 102  | 104  | 28  | 790  | 143  | 4491
+ACME | database-01 |  7 | 84  | 52   | 5  | 296  | 41  | 2637
+ACME |  application-01 | 3  | 55  | 16  | 3  | 114  | 19  | 1363
+ACME | satellite6 | 0  | 0  | 0  | 0  | 0  | 0  |  0
 
-The article [3], describing the disadvantages of static site generator software compared to CMS software, includes among them the following "Publishing the site requires tools and code on your computer".
-The GitHub Actions workflow described in this post allows to mitigate this problem. This workflow allows to use the web interface of GitHub to create Jekyll posts exploiting the "MarkDown editor" and "check spelling" features contained in the issue editor of GitHub web site without require any tool installed.
+In the box below there is the code to generate this report, the code can be also downloaded [here](https://github.com/giovannisciortino/community-templates/blob/31d197fe4154a526e281a8424ee5ccb438bc80af/report_templates/host_-_system_currency.erb):
 
-The automation described in this post is contained in three files:
-
-1. A github issue template [4] containing a template of a new jekyll post file
-2. A github issue configuration file [5] that allow to create also github issue not respecting the template described in 1.
-3. A Github Workflow [6]
-
-The GitHub workflow has been reported also below in order to describe its main components:
-
-{% highlight YAML linenos %}
-name: A workflow to create a jekyll post from github issue
-on:
-  issue_comment:
-    types: [created]
-jobs:
-  build:
-    name: A job to create a jekyll post from github issue
-    runs-on: ubuntu-latest
-    if: github.event.comment.body == 'publish'
-    steps:
-      - name: Checkout master branch
-        uses: actions/checkout@master
-
-      - name: Create jekyll post file
-        if: success() && github.event.issue.user.login == env.GITHUB_ACCOUNT_JEKYLL_OWNER
-        run: |
-          cat << 'EOF' > $POST_DIRECTORY/${{ github.event.issue.title }}
-          ${{ github.event.issue.body }}
-          EOF
-        env:
-          GITHUB_ACCOUNT_JEKYLL_OWNER: 'giovannisciortino'
-          POST_DIRECTORY: '_posts'
-
-      - name: Commit files
-        if: success()
-        run: |
-          git config --local user.name "$GIT_USER_NAME"
-          git config --local user.email "$GIT_USER_EMAIL"
-          git add --all
-          # commit only if there are changes
-          if [[ `git status --porcelain` ]]; then
-            git commit -m "$DEFAULT_COMMIT_MESSAGE" -a
-          fi
-        env:
-          GIT_USER_NAME: 'Giovanni Sciortino'
-          GIT_USER_EMAIL: 'giovannibattistasciortino@gmail.com'
-          DEFAULT_COMMIT_MESSAGE: 'New jekyll post create from github issue'
-
-      - name: Push changes
-        if: success()
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+{% highlight YAML ruby %}
+<%#
+name: Host - System currency
+snippet: false
+template_inputs:
+- name: Hosts filter
+  required: false
+  input_type: user
+  description: Limit the report only on hosts found by this search query. Keep empty
+    for report on all available hosts.
+  advanced: false
+  value_type: search
+  resource_type: Host
+- name: Errata filter
+  required: false
+  input_type: user
+  description: Limit the report only on errata found by this search query. Keep empty
+    for report on all available errata.
+  advanced: false
+model: ReportTemplate
+require:
+- plugin: katello
+￼ version: 3.9.0
+-%>
+<%  # multiplier for critical security errata -%>
+<%- sc_crit = 32 -%>
+<%  # multiplier for important security errata -%>
+<%- sc_imp = 16 -%>
+<%  # multiplier for moderate important security errata -%>
+<%- sc_mod = 8 -%>
+<%  # multiplier for low important security errata -%>
+<%- sc_low = 4 -%>
+<%  # multiplier for bugfix errrata -%>
+<%- sc_bug = 2 -%>
+<%  # multiplier for ehnancement errata -%>
+<%- sc_enh = 1 -%>
+<%- report_entries = [] -%>
+<%- load_hosts(search: input('Hosts filter'), includes: [:applicable_errata]).each_record do |host| -%>
+<%-   critical = 0 -%>
+<%-   important = 0 -%>
+<%-   moderate = 0 -%>
+<%-   low = 0 -%>
+<%-   bugfix = 0 -%>
+<%-   enhancement = 0 -%>
+<%-   host_applicable_errata_filtered(host, input('Errata filter')).each do |erratum| -%>
+<%-   critical+=1 if erratum.errata_type == 'security' and erratum.severity == 'Critical' -%>
+<%-   important+=1 if erratum.errata_type == 'security' and erratum.severity == 'Important' -%>
+<%-   moderate+=1 if erratum.errata_type == 'security' and erratum.severity == 'Moderate' -%>
+<%-   low+=1 if erratum.errata_type == 'security' and erratum.severity == 'Low' -%>
+<%-   bugfix+=1 if erratum.errata_type == 'bugfix' -%>
+<%-   enhancement+=1 if erratum.errata_type == 'enhancement' -%>
+<%-   end -%>
+<%-   score = critical*sc_crit + important*sc_imp + moderate*sc_mod + low*sc_low + bugfix*sc_bug + enhancement*sc_enh -%>
+<%-   report_entries << {
+          'Organization': host.organization,    
+          'Host ID': host.id,
+          'Host': host.name,
+          'Critical': critical,
+          'Important': important,
+          'Moderate': moderate,
+          'Low': low,
+          'Bugfix': bugfix,
+          'Enhancement': enhancement,
+          'Score': score,
+      } -%>
+<%- end -%>
+<%# Decomment the following line only if Foreman Jail support sort_by method for Array -%>
+<%# report_entries = report_entries.sort_by { |k| k['Score'] }.reverse  -%>
+<%- report_entries.each do |entry| -%>
+<%-     report_row(
+          entry
+        ) -%>
+<%- end -%>
+<%= report_render -%>
 {% endhighlight %}
 
-This GitHub workflow contains the following main elements:
-- it contains the trigger executing it (line 3-4). It's triggered when a new comment is added to a github issue
-- it execute the four steps of the job contained in the workflow when someone write the comment "publish" in the GitHub issue (line 9)
-- The first step clone the repository containing the Jekyll git repository in a ubuntu docker container (line 11-12)
-- The second step verify that the author of the command publish is the owner of the GitHub repository and create the Jekyll post reading the content from the title and the first message of the github issue (line 14-22)
-- The third step create a new commit using the file modified in the second step (line 24-37)
-- The forth sep push the new commit to GitHub (line 39-43)
-
-These three files allow to implement the workflow described in this post.
-The automation described in this post has been used to create this post itself, [7] is the GitHub issue used to create this post.
-
-[1] https://github.com/features/actions
-
-[2] https://jekyllrb.com/
-
-[3] https://www.strattic.com/jekyll-hugo-wordpress-pros-cons-static-site-generators/
-
-[4] https://github.com/giovannisciortino/giovannisciortino.github.io/blob/master/.github/ISSUE_TEMPLATE/jekill_post_new_template.md
-
-[5] https://github.com/giovannisciortino/giovannisciortino.github.io/blob/master/.github/ISSUE_TEMPLATE/config.yml
-
-[6] https://github.com/giovannisciortino/giovannisciortino.github.io/blob/master/.github/workflows/create_jekyll_post_from_issue.yamlhttps://raw.githubusercontent.com/giovannisciortino/giovannisciortino.github.io/master/.github/workflows/create_jekyll_post_from_issue.yaml
+Two input variable named "Hosts filter" and "Errata filter" must be added to this report from Satellite Web UI in order to correct receive the input from the users.
