@@ -71,9 +71,9 @@ var store = [{
         "url": "/test/2020/04/05/use_github_actions_to_create_jekyll_post_from_github_issue.html",
         "teaser": null
       },{
-        "title": "Red Hat Satellite 6 - System currency report",
-        "excerpt":"Report engine feature from Sat 6.5   https://www.redhat.com/en/blog/getting-started-satellite-65-reporting-engine   It allows to create custom template   Satellite 5 has a liste of predefined template https://access.redhat.com/documentation/en-us/red_hat_satellite/5.8/html/user_guide/chap-generating_red_hat_satellite_reports   Description system currency   Description parameters   https://github.com/giovannisciortino/community-templates/blob/31d197fe4154a526e281a8424ee5ccb438bc80af/report_templates/host_-_system_currency.erb  ","categories": [],
+        "title": "Satellite 6 reporting engine - System currency report",
+        "excerpt":"This post describe a GitHub Actions workflow that allow to create new post on a Jekyll web site contained in a GitHub repository using the issue editor of GitHub website. GitHub Actions [1] makes it easy to automate all your software workflows, it build, test, and deploy your code right...","categories": [],
         "tags": ["satellite"],
-        "url": "/test/2020/04/26/red_hat_satellite_6_system-currency_report.html",
+        "url": "/test/2020/05/06/satellite_6_reporting_engine_system_currency_report.html",
         "teaser": null
       }]
