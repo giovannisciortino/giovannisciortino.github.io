@@ -4,7 +4,7 @@ tags: [satellite]
 ---
 
 This post describe how generate the "System currency" report in Red Hat Satellite 6.
-System currency report is a report already existing in Satellite 5, below there its description from Satellite 5 [documentation](https://access.redhat.com/documentation/en-us/red_hat_satellite/5.6/html/getting_started_guide/sect-getting_started_guide-systems_management-managing_systems_with_satellite)
+System currency report is a report existing in Satellite 5 but it isn't included in Satellite 6. Below there is a description this report from Satellite 5 [documentation](https://access.redhat.com/documentation/en-us/red_hat_satellite/5.6/html/getting_started_guide/sect-getting_started_guide-systems_management-managing_systems_with_satellite)
 
 > System Currency report which lists registered systems ordered by score. The score is determined by the totals of the errata relevant to the systems. A specific weighted score per category per errata adds to the total score where the default weight awards critical security errata with the heaviest weight and enhancement errata with the lowest. The report can be used to prioritize maintenance actions on the systems registered to the Satellite.
 

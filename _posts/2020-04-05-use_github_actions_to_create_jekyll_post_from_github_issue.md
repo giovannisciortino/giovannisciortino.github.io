@@ -1,6 +1,6 @@
 ---
 title:  "Use GitHub Actions to create Jekyll post from GitHub issue"
-tags: [github actions,jekyll]
+tags: [github,jekyll]
 ---
 This post describe a GitHub Actions workflow that allow to create new post on a Jekyll web site contained in a GitHub repository using the issue editor of GitHub website.
 

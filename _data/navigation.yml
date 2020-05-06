@@ -33,5 +33,7 @@ sidebar:
         url: /tag/linux
       - title: python
         url: /tag/python
+      - title: satellite
+        url: /tag/satellite
       - title: spark
         url: /tag/spark
