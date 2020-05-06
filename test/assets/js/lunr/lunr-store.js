@@ -71,8 +71,8 @@ var store = [{
         "url": "/test/2020/04/05/use_github_actions_to_create_jekyll_post_from_github_issue.html",
         "teaser": null
       },{
-        "title": "Satellite 6 reporting engine - System currency report",
-        "excerpt":"This post describe a GitHub Actions workflow that allow to create new post on a Jekyll web site contained in a GitHub repository using the issue editor of GitHub website. GitHub Actions [1] makes it easy to automate all your software workflows, it build, test, and deploy your code right...","categories": [],
+        "title": "Red Hat Satellite 6 reporting engine - System currency report",
+        "excerpt":"This post describe how generate the “System currency” report in Red Hat Satellite 6. System currency report is a report already existing in Satellite 5, below there its description from Satellite 5 documentation System Currency report which lists registered systems ordered by score. The score is determined by the totals...","categories": [],
         "tags": ["satellite"],
         "url": "/test/2020/05/06/satellite_6_reporting_engine_system_currency_report.html",
         "teaser": null

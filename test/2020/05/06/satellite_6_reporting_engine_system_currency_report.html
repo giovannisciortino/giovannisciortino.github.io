@@ -9,19 +9,19 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>Satellite 6 reporting engine - System currency report - SYSADMIN CONTINUOUS IMPROVEMENT</title>
-<meta name="description" content="This post describe a GitHub Actions workflow that allow to create new post on a Jekyll web site contained in a GitHub repository using the issue editor of GitHub website. ">
+<!-- begin _includes/seo.html --><title>Red Hat Satellite 6 reporting engine - System currency report - SYSADMIN CONTINUOUS IMPROVEMENT</title>
+<meta name="description" content="This post describe how generate the “System currency” report in Red Hat Satellite 6. System currency report is a report already existing in Satellite 5, below there its description from Satellite 5 documentation ">
 
 
 
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="SYSADMIN CONTINUOUS IMPROVEMENT">
-<meta property="og:title" content="Satellite 6 reporting engine - System currency report">
+<meta property="og:title" content="Red Hat Satellite 6 reporting engine - System currency report">
 <meta property="og:url" content="/test/2020/05/06/satellite_6_reporting_engine_system_currency_report.html">
 
 
-  <meta property="og:description" content="This post describe a GitHub Actions workflow that allow to create new post on a Jekyll web site contained in a GitHub repository using the issue editor of GitHub website. ">
+  <meta property="og:description" content="This post describe how generate the “System currency” report in Red Hat Satellite 6. System currency report is a report already existing in Satellite 5, below there its description from Satellite 5 documentation ">
 
 
 
@@ -210,15 +210,15 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="Satellite 6 reporting engine - System currency report">
-    <meta itemprop="description" content="This post describe a GitHub Actions workflow that allow to create new post on a Jekyll web site contained in a GitHub repository using the issue editor of GitHub website.">
+    <meta itemprop="headline" content="Red Hat Satellite 6 reporting engine - System currency report">
+    <meta itemprop="description" content="This post describe how generate the “System currency” report in Red Hat Satellite 6.System currency report is a report already existing in Satellite 5, below there its description from Satellite 5 documentation">
     <meta itemprop="datePublished" content="2020-05-06T00:00:00+00:00">
     
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">Satellite 6 reporting engine - System currency report
+          <h1 id="page-title" class="page__title" itemprop="headline">Red Hat Satellite 6 reporting engine - System currency report
 </h1>
           
         </header>
@@ -226,136 +226,167 @@
 
       <section class="page__content" itemprop="text">
         
-        <p>This post describe a GitHub Actions workflow that allow to create new post on a Jekyll web site contained in a GitHub repository using the issue editor of GitHub website.</p>
+        <p>This post describe how generate the “System currency” report in Red Hat Satellite 6.
+System currency report is a report already existing in Satellite 5, below there its description from Satellite 5 <a href="https://access.redhat.com/documentation/en-us/red_hat_satellite/5.6/html/getting_started_guide/sect-getting_started_guide-systems_management-managing_systems_with_satellite">documentation</a></p>
 
-<p>GitHub Actions [1] makes it easy to automate all your software workflows, it build, test, and deploy your code right from GitHub.
-Jekyll [2] is a simple, blog-aware, static site generator perfect for personal, project, or organization sites.</p>
+<blockquote>
+  <p>System Currency report which lists registered systems ordered by score. The score is determined by the totals of the errata relevant to the systems. A specific weighted score per category per errata adds to the total score where the default weight awards critical security errata with the heaviest weight and enhancement errata with the lowest. The report can be used to prioritize maintenance actions on the systems registered to the Satellite.</p>
+</blockquote>
 
-<p>The article [3], describing the disadvantages of static site generator software compared to CMS software, includes among them the following “Publishing the site requires tools and code on your computer”.
-The GitHub Actions workflow described in this post allows to mitigate this problem. This workflow allows to use the web interface of GitHub to create Jekyll posts exploiting the “MarkDown editor” and “check spelling” features contained in the issue editor of GitHub web site without require any tool installed.</p>
+<p>In Red Hat Satellite 6.5 has been introduced a new feature named <a href="https://www.redhat.com/en/blog/getting-started-satellite-65-reporting-engine">“Reporting engine”</a>, allows to Satellite users to create reports that can be exported in different formats.</p>
 
-<p>The automation described in this post is contained in three files:</p>
+<p>Below there is an example of the output of the Satellite 6 system currency reports:</p>
 
-<ol>
-  <li>A github issue template [4] containing a template of a new jekyll post file</li>
-  <li>A github issue configuration file [5] that allow to create also github issue not respecting the template described in 1.</li>
-  <li>A Github Workflow [6]</li>
-</ol>
+<table>
+  <thead>
+    <tr>
+      <th>Organization</th>
+      <th>Host</th>
+      <th>Critical</th>
+      <th>Important</th>
+      <th>Moderate</th>
+      <th>Low</th>
+      <th>Bugfix</th>
+      <th>Enhancement</th>
+      <th>Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ACME</td>
+      <td>dhcp-server-01</td>
+      <td>6</td>
+      <td>102</td>
+      <td>103</td>
+      <td>28</td>
+      <td>794</td>
+      <td>144</td>
+      <td>4492</td>
+    </tr>
+    <tr>
+      <td>ACME</td>
+      <td>dhcp-server-02</td>
+      <td>6</td>
+      <td>102</td>
+      <td>104</td>
+      <td>28</td>
+      <td>790</td>
+      <td>143</td>
+      <td>4491</td>
+    </tr>
+    <tr>
+      <td>ACME</td>
+      <td>database-01</td>
+      <td>7</td>
+      <td>84</td>
+      <td>52</td>
+      <td>5</td>
+      <td>296</td>
+      <td>41</td>
+      <td>2637</td>
+    </tr>
+    <tr>
+      <td>ACME</td>
+      <td>application-01</td>
+      <td>3</td>
+      <td>55</td>
+      <td>16</td>
+      <td>3</td>
+      <td>114</td>
+      <td>19</td>
+      <td>1363</td>
+    </tr>
+    <tr>
+      <td>ACME</td>
+      <td>satellite6</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
 
-<p>The GitHub workflow has been reported also below in order to describe its main components:</p>
+<p>In the box below there is the code to generate this report, the code can be also downloaded <a href="https://github.com/giovannisciortino/community-templates/blob/31d197fe4154a526e281a8424ee5ccb438bc80af/report_templates/host_-_system_currency.erb">here</a>:</p>
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-</pre></td><td class="code"><pre><span class="na">name</span><span class="pi">:</span> <span class="s">A workflow to create a jekyll post from github issue</span>
-<span class="na">on</span><span class="pi">:</span>
-  <span class="na">issue_comment</span><span class="pi">:</span>
-    <span class="na">types</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">created</span><span class="pi">]</span>
-<span class="na">jobs</span><span class="pi">:</span>
-  <span class="na">build</span><span class="pi">:</span>
-    <span class="na">name</span><span class="pi">:</span> <span class="s">A job to create a jekyll post from github issue</span>
-    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
-    <span class="na">if</span><span class="pi">:</span> <span class="s">github.event.comment.body == 'publish'</span>
-    <span class="na">steps</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Checkout master branch</span>
-        <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@master</span>
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="s">&lt;%#</span>
+<span class="na">name</span><span class="pi">:</span> <span class="s">Host - System currency</span>
+<span class="na">snippet</span><span class="pi">:</span> <span class="no">false</span>
+<span class="na">template_inputs</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Hosts filter</span>
+  <span class="na">required</span><span class="pi">:</span> <span class="no">false</span>
+  <span class="na">input_type</span><span class="pi">:</span> <span class="s">user</span>
+  <span class="na">description</span><span class="pi">:</span> <span class="s">Limit the report only on hosts found by this search query. Keep empty</span>
+    <span class="s">for report on all available hosts.</span>
+  <span class="na">advanced</span><span class="pi">:</span> <span class="no">false</span>
+  <span class="na">value_type</span><span class="pi">:</span> <span class="s">search</span>
+  <span class="na">resource_type</span><span class="pi">:</span> <span class="s">Host</span>
+<span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Errata filter</span>
+  <span class="na">required</span><span class="pi">:</span> <span class="no">false</span>
+  <span class="na">input_type</span><span class="pi">:</span> <span class="s">user</span>
+  <span class="na">description</span><span class="pi">:</span> <span class="s">Limit the report only on errata found by this search query. Keep empty</span>
+    <span class="s">for report on all available errata.</span>
+  <span class="na">advanced</span><span class="pi">:</span> <span class="no">false</span>
+<span class="na">model</span><span class="pi">:</span> <span class="s">ReportTemplate</span>
+<span class="na">require</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="na">plugin</span><span class="pi">:</span> <span class="s">katello</span>
+<span class="s">￼ version</span><span class="pi">:</span> <span class="s">3.9.0</span>
+<span class="s">-%&gt;</span>
+<span class="s">&lt;%</span>  <span class="c1"># multiplier for critical security errata -%&gt;</span>
+<span class="s">&lt;%- sc_crit = 32 -%&gt;</span>
+<span class="s">&lt;%</span>  <span class="c1"># multiplier for important security errata -%&gt;</span>
+<span class="s">&lt;%- sc_imp = 16 -%&gt;</span>
+<span class="s">&lt;%</span>  <span class="c1"># multiplier for moderate important security errata -%&gt;</span>
+<span class="s">&lt;%- sc_mod = 8 -%&gt;</span>
+<span class="s">&lt;%</span>  <span class="c1"># multiplier for low important security errata -%&gt;</span>
+<span class="s">&lt;%- sc_low = 4 -%&gt;</span>
+<span class="s">&lt;%</span>  <span class="c1"># multiplier for bugfix errrata -%&gt;</span>
+<span class="s">&lt;%- sc_bug = 2 -%&gt;</span>
+<span class="s">&lt;%</span>  <span class="c1"># multiplier for ehnancement errata -%&gt;</span>
+<span class="s">&lt;%- sc_enh = 1 -%&gt;</span>
+<span class="s">&lt;%- report_entries = [] -%&gt;</span>
+<span class="s">&lt;%- load_hosts(search</span><span class="pi">:</span> <span class="s">input('Hosts filter'), includes</span><span class="pi">:</span> <span class="pi">[:</span><span class="nv">applicable_errata</span><span class="pi">]</span><span class="s">).each_record do |host| -%&gt;</span>
+<span class="s">&lt;%-   critical = 0 -%&gt;</span>
+<span class="s">&lt;%-   important = 0 -%&gt;</span>
+<span class="s">&lt;%-   moderate = 0 -%&gt;</span>
+<span class="s">&lt;%-   low = 0 -%&gt;</span>
+<span class="s">&lt;%-   bugfix = 0 -%&gt;</span>
+<span class="s">&lt;%-   enhancement = 0 -%&gt;</span>
+<span class="s">&lt;%-   host_applicable_errata_filtered(host, input('Errata filter')).each do |erratum| -%&gt;</span>
+<span class="s">&lt;%-   critical+=1 if erratum.errata_type == 'security' and erratum.severity == 'Critical' -%&gt;</span>
+<span class="s">&lt;%-   important+=1 if erratum.errata_type == 'security' and erratum.severity == 'Important' -%&gt;</span>
+<span class="s">&lt;%-   moderate+=1 if erratum.errata_type == 'security' and erratum.severity == 'Moderate' -%&gt;</span>
+<span class="s">&lt;%-   low+=1 if erratum.errata_type == 'security' and erratum.severity == 'Low' -%&gt;</span>
+<span class="s">&lt;%-   bugfix+=1 if erratum.errata_type == 'bugfix' -%&gt;</span>
+<span class="s">&lt;%-   enhancement+=1 if erratum.errata_type == 'enhancement' -%&gt;</span>
+<span class="s">&lt;%-   end -%&gt;</span>
+<span class="s">&lt;%-   score = critical*sc_crit + important*sc_imp + moderate*sc_mod + low*sc_low + bugfix*sc_bug + enhancement*sc_enh -%&gt;</span>
+<span class="s">&lt;%-   report_entries &lt;&lt; {</span>
+          <span class="s">'Organization'</span><span class="pi">:</span> <span class="s">host.organization,</span>    
+          <span class="s">'Host ID'</span><span class="pi">:</span> <span class="s">host.id,</span>
+          <span class="s">'Host'</span><span class="pi">:</span> <span class="s">host.name,</span>
+          <span class="s">'Critical'</span><span class="pi">:</span> <span class="s">critical,</span>
+          <span class="s">'Important'</span><span class="pi">:</span> <span class="s">important,</span>
+          <span class="s">'Moderate'</span><span class="pi">:</span> <span class="s">moderate,</span>
+          <span class="s">'Low'</span><span class="pi">:</span> <span class="s">low,</span>
+          <span class="s">'Bugfix'</span><span class="pi">:</span> <span class="s">bugfix,</span>
+          <span class="s">'Enhancement'</span><span class="pi">:</span> <span class="s">enhancement,</span>
+          <span class="s">'Score'</span><span class="pi">:</span> <span class="s">score,</span>
+      <span class="s">} -%&gt;</span>
+<span class="s">&lt;%- end -%&gt;</span>
+<span class="s">&lt;%# Decomment the following line only if Foreman Jail support sort_by method for Array -%&gt;</span>
+<span class="s">&lt;%# report_entries = report_entries.sort_by { |k| k['Score'] }.reverse  -%&gt;</span>
+<span class="s">&lt;%- report_entries.each do |entry| -%&gt;</span>
+<span class="s">&lt;%-     report_row(</span>
+          <span class="s">entry</span>
+        <span class="s">) -%&gt;</span>
+<span class="s">&lt;%- end -%&gt;</span>
+<span class="s">&lt;%= report_render -%&gt;</span></code></pre></figure>
 
-      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Create jekyll post file</span>
-        <span class="na">if</span><span class="pi">:</span> <span class="s">success() &amp;&amp; github.event.issue.user.login == env.GITHUB_ACCOUNT_JEKYLL_OWNER</span>
-        <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
-          <span class="s">cat &lt;&lt; 'EOF' &gt; $POST_DIRECTORY/$</span>
-          <span class="s">$</span>
-          <span class="s">EOF</span>
-        <span class="na">env</span><span class="pi">:</span>
-          <span class="na">GITHUB_ACCOUNT_JEKYLL_OWNER</span><span class="pi">:</span> <span class="s1">'</span><span class="s">giovannisciortino'</span>
-          <span class="na">POST_DIRECTORY</span><span class="pi">:</span> <span class="s1">'</span><span class="s">_posts'</span>
-
-      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Commit files</span>
-        <span class="na">if</span><span class="pi">:</span> <span class="s">success()</span>
-        <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
-          <span class="s">git config --local user.name "$GIT_USER_NAME"</span>
-          <span class="s">git config --local user.email "$GIT_USER_EMAIL"</span>
-          <span class="s">git add --all</span>
-          <span class="s"># commit only if there are changes</span>
-          <span class="s">if [[ `git status --porcelain` ]]; then</span>
-            <span class="s">git commit -m "$DEFAULT_COMMIT_MESSAGE" -a</span>
-          <span class="s">fi</span>
-        <span class="na">env</span><span class="pi">:</span>
-          <span class="na">GIT_USER_NAME</span><span class="pi">:</span> <span class="s1">'</span><span class="s">Giovanni</span><span class="nv"> </span><span class="s">Sciortino'</span>
-          <span class="na">GIT_USER_EMAIL</span><span class="pi">:</span> <span class="s1">'</span><span class="s">giovannibattistasciortino@gmail.com'</span>
-          <span class="na">DEFAULT_COMMIT_MESSAGE</span><span class="pi">:</span> <span class="s1">'</span><span class="s">New</span><span class="nv"> </span><span class="s">jekyll</span><span class="nv"> </span><span class="s">post</span><span class="nv"> </span><span class="s">create</span><span class="nv"> </span><span class="s">from</span><span class="nv"> </span><span class="s">github</span><span class="nv"> </span><span class="s">issue'</span>
-
-      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Push changes</span>
-        <span class="na">if</span><span class="pi">:</span> <span class="s">success()</span>
-        <span class="na">uses</span><span class="pi">:</span> <span class="s">ad-m/github-push-action@master</span>
-        <span class="na">with</span><span class="pi">:</span>
-          <span class="na">github_token</span><span class="pi">:</span> <span class="s">$</span>
-</pre></td></tr></tbody></table></code></pre></figure>
-
-<p>This GitHub workflow contains the following main elements:</p>
-<ul>
-  <li>it contains the trigger executing it (line 3-4). It’s triggered when a new comment is added to a github issue</li>
-  <li>it execute the four steps of the job contained in the workflow when someone write the comment “publish” in the GitHub issue (line 9)</li>
-  <li>The first step clone the repository containing the Jekyll git repository in a ubuntu docker container (line 11-12)</li>
-  <li>The second step verify that the author of the command publish is the owner of the GitHub repository and create the Jekyll post reading the content from the title and the first message of the github issue (line 14-22)</li>
-  <li>The third step create a new commit using the file modified in the second step (line 24-37)</li>
-  <li>The forth sep push the new commit to GitHub (line 39-43)</li>
-</ul>
-
-<p>These three files allow to implement the workflow described in this post.
-The automation described in this post has been used to create this post itself, [7] is the GitHub issue used to create this post.</p>
-
-<p>[1] https://github.com/features/actions</p>
-
-<p>[2] https://jekyllrb.com/</p>
-
-<p>[3] https://www.strattic.com/jekyll-hugo-wordpress-pros-cons-static-site-generators/</p>
-
-<p>[4] https://github.com/giovannisciortino/giovannisciortino.github.io/blob/master/.github/ISSUE_TEMPLATE/jekill_post_new_template.md</p>
-
-<p>[5] https://github.com/giovannisciortino/giovannisciortino.github.io/blob/master/.github/ISSUE_TEMPLATE/config.yml</p>
-
-<p>[6] https://github.com/giovannisciortino/giovannisciortino.github.io/blob/master/.github/workflows/create_jekyll_post_from_issue.yamlhttps://raw.githubusercontent.com/giovannisciortino/giovannisciortino.github.io/master/.github/workflows/create_jekyll_post_from_issue.yaml</p>
+<p>Two input variable named “Hosts filter” and “Errata filter” must be added to this report from Satellite Web UI in order to correct receive the input from the users.</p>
 
         
       </section>
