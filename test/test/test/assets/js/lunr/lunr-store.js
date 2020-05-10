@@ -70,4 +70,10 @@ var store = [{
         "tags": ["github actions","jekyll"],
         "url": "/test/2020/04/05/use_github_actions_to_create_jekyll_post_from_github_issue.html",
         "teaser": null
+      },{
+        "title": "Red Hat Satellite 6 - System currency report",
+        "excerpt":"Report engine feature from Sat 6.5   https://www.redhat.com/en/blog/getting-started-satellite-65-reporting-engine   It allows to create custom template   Satellite 5 has a liste of predefined template https://access.redhat.com/documentation/en-us/red_hat_satellite/5.8/html/user_guide/chap-generating_red_hat_satellite_reports   Description system currency   Description parameters   https://github.com/giovannisciortino/community-templates/blob/31d197fe4154a526e281a8424ee5ccb438bc80af/report_templates/host_-_system_currency.erb  ","categories": [],
+        "tags": ["satellite"],
+        "url": "/test/2020/04/26/red_hat_satellite_6_system-currency_report.html",
+        "teaser": null
       }]
