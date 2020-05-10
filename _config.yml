@@ -23,7 +23,7 @@ email: giovannibattistasciortino@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   Useful tips and tools for system administrator
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://giovannisciortino.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 #twitter_username: jekyllrb
 github_username:  giovannisciortino
 
@@ -34,6 +34,7 @@ plugins:
   - jekyll-feed
   # used by them mmistakes/minimal-mistakes
   - jekyll-include-cache
+  - jekyll-sitemap
 
 # configuration minimal-mistakes
 locale: "en-US"
@@ -53,6 +54,14 @@ defaults:
       related: true
       sidebar:
         nav: "sidebar"
+  - scope:
+      path: "test/*"
+    values:
+      sitemap: false
+  - scope:
+      path: "google40286c3032536572.html"
+    values:
+      sitemap: false
 
 # Google Analytics
 google_analytics: UA-35175794-1
