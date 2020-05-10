@@ -58,7 +58,8 @@ jobs:
           bundle config path /home/runner/work/vendor/bundle
           bundle config --global --jobs 2
           bundle install
-      - name: Build jekyll website
+
+- name: Build jekyll website
         run: |
           export GEM_HOME="$HOME/gems"
           export PATH="$HOME/gems/bin:$PATH"
@@ -68,7 +69,9 @@ jobs:
           cd ..
           rm -rf master/test/*
           cp -r test/_site/* master/test/
-      - name: Commit files
+          rm -rf master/test/test
+
+- name: Commit files
         working-directory: master
         run: |
           git config --local user.name "$GIT_USER_NAME"
